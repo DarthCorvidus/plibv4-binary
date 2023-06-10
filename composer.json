@@ -1,0 +1,6 @@
+{
+	"name": "plibv4/binary",
+	"autoload": {
+        "classmap": ["src/"]
+    }
+}
