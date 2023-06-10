@@ -2,6 +2,8 @@
 /**
  * Interface for a binary structure, which defines a collection of both BinVals
  * and BinStructs, to define complex and nested binary files.
+ * @copyright (c) 2023 Claus-Christoph Küthe
+ * @author Claus-Christoph Küthe <floss@vm01.telton.de>
  */
 interface BinStruct {
 	/**
