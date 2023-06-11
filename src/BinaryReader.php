@@ -7,6 +7,9 @@
  */
 class BinaryReader {
 	static function fromHandle($fh, BinStruct $model): array {
+		if($fh === FALSE) {
+			throw new InvalidArgumentException("Handle is not a valid stream, but boolean false.");
+		}
 		$values = array();
 		foreach($model->getNames() as $value) {
 			if($model->isBinVal($value)) {
@@ -23,6 +26,9 @@ class BinaryReader {
 	
 	static function fromPath(string $filename, BinStruct $model): array {
 		$handle = fopen($filename, "rb");
+		if($handle===FALSE) {
+			throw new Exception("Could not open file ".$filename);
+		}
 		$values = self::fromHandle($handle, $model);
 		fclose($handle);
 	return $values;
