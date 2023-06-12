@@ -16,7 +16,7 @@ class RawVal implements BinVal {
 	}
 
 	public function getValue(string $string) {
-		return $string;
+		return substr($string, 0, $this->length);
 	}
 
 	public function putValue($value): string {
