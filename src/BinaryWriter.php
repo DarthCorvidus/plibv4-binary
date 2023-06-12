@@ -6,6 +6,24 @@
  * @author Claus-Christoph Küthe <floss@vm01.telton.de>
  */
 class BinaryWriter {
+	static function toString(array $values, BinStruct $model): string {
+		$string = "";
+		foreach($model->getNames() as $value) {
+			if(!isset($values[$value])) {
+				throw new OutOfBoundsException("Key ".$value." does not exist in input array while processing ". get_class($model));
+			}
+			$input = $values[$value];
+			if($model->isBinVal($value)) {
+				$binval = $model->getBinVal($value);
+				$string .= $binval->putValue($input);
+			}
+			if($model->isBinStruct($value)) {
+				$string .= BinaryWriter::toString($input, $model->getBinStruct($value));
+			}
+		}
+	return $string;
+	}
+
 	static function toHandle($handle, array $values, BinStruct $model) {
 		foreach($model->getNames() as $value) {
 			if(!isset($values[$value])) {
