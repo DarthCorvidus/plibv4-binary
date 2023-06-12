@@ -11,6 +11,7 @@ class PrefixedStringVal implements BinVal {
 
 	public function getValue(string $string) {
 		$length = $this->intval->getValue($string);
+		$this->length = $this->intval->getLength()+$length;
 	return substr($string, $this->intval->getLength(), $length);
 	}
 
