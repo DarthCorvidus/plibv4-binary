@@ -6,6 +6,36 @@
  * @author Claus-Christoph Küthe <floss@vm01.telton.de>
  */
 class BinaryReader {
+	private $model;
+	private $pos;
+	private $string;
+	function __construct(BinStruct $model) {
+		$this->model = $model;
+	}
+	
+	private function recurse(BinStruct $model) {
+		$values = array();
+		foreach($model->getNames() as $value) {
+			if($model->isBinVal($value)) {
+				$binval = $model->getBinVal($value);
+				$bin = substr($this->string, $this->pos);
+				$values[$value] = $binval->getValue($bin);
+				$this->pos += $binval->getLength();
+			}
+			if($model->isBinStruct($value)) {
+				$values[$value] = $this->recurse($model->getBinStruct($value));
+			}
+			
+		}
+	return $values;
+	}
+	
+	function fromString(string $string): array {
+		$this->string = $string;
+		$this->pos = 0;
+	return $this->recurse($this->model);
+	}
+
 	static function fromHandle($fh, BinStruct $model): array {
 		if($fh === FALSE) {
 			throw new InvalidArgumentException("Handle is not a valid stream, but boolean false.");
