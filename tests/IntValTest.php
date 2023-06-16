@@ -62,4 +62,18 @@ class IntValTest extends TestCase {
 		$this->assertEquals($intval->putValue(1627472129), chr(01).chr(65).chr(01).chr(97));
 	}
 	
+	function testGetEmpty() {
+		$intval = IntVal::uint8();
+		$this->expectException(RuntimeException::class);
+		$this->expectExceptionMessage("binary value is empty.");
+		$intval->getValue("");
+	}
+
+	function testPutEmpty() {
+		$intval = IntVal::uint8();
+		$this->expectException(RuntimeException::class);
+		$this->expectExceptionMessage("binary value is empty.");
+		$intval->putValue("");
+	}
+	
 }

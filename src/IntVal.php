@@ -94,6 +94,9 @@ class IntVal implements BinVal {
 	}
 	
 	function getValue(string $value) {
+		if($value==="") {
+			throw new RuntimeException("binary value is empty.");
+		}
 		$unpack = unpack($this->getPackChar(), $value);
 	return $unpack[1];
 	}
@@ -103,6 +106,9 @@ class IntVal implements BinVal {
 	}
 	
 	function putValue($value): string {
+		if($value==="") {
+			throw new RuntimeException("binary value is empty.");
+		}
 		return pack($this->getPackChar(), $value);
 	}
 }
