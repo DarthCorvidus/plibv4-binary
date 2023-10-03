@@ -99,5 +99,38 @@ class StringReader {
 		$this->pos += 8;
 	return $value;
 	}
-
+	
+	function getStringC(int $fixedLength = 0): string {
+		$return = "";
+		if($fixedLength!==0) {
+			$return = trim(substr($this->string, $this->pos, $fixedLength));
+			$len = strlen($return);
+			if($len>$fixedLength-1) {
+				throw new \RuntimeException("payload size ".$len.", ".($fixedLength-1)." allowed.");
+			}
+			$this->pos += $fixedLength;
+		return trim($return);
+		}
+		
+		while($this->string[$this->pos]!==chr(0)) {
+			$return .= $this->string[$this->pos];
+			$this->pos++;
+		}
+		$this->pos++;
+	return $return;
+	}
+	
+	function getIndexedString($width, int $fixedLength = 0) {
+		if(!in_array($width, array(8, 16, 32, 64))) {
+			throw new \RuntimeException("invalid index width, use 8, 16, 32, 64");
+		}
+		$length = call_user_func(array($this, "getUint".$width));
+		$return = substr($this->string, $this->pos, $length);
+		if($fixedLength==0) {
+			$this->pos += $length;
+		} else {
+			$this->pos += $fixedLength;
+		}
+	return $return;
+	}
 }
