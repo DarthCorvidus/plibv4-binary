@@ -121,11 +121,18 @@ class StringWriter {
 			throw new \RuntimeException("invalid index width, use 8, 16, 32, 64");
 		}
 		$len = strlen($string);
-		$max = pow($width, 2)-1;
+		if($fixedLength!==0 && $len>$fixedLength) {
+			throw new \RuntimeException("fixed length ".$fixedLength.", string length ".$len);
+		}
+		$max = pow(2, $width)-1;
 		if($len > $max) {
 			throw new \RuntimeException("string length ".$len.", max index length ".$max);
 		}
 		call_user_func(array($this, "addUint".$width), $len);
+		if($fixedLength!==0) {
+			$this->string .= str_pad($string, $fixedLength, "\0");
+		return;
+		}
 		$this->string .= $string;
 	}
 

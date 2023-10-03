@@ -143,11 +143,108 @@ class StringWriterTest extends TestCase {
 	function testVarIndexedStringEmpty() {
 		$writer = new StringWriter(StringWriter::LE);
 		$writer->addUInt16(self::UINT16);
-		$writer->addIndexedString(8, "", 10);
+		$writer->addIndexedString(8, "");
 		$writer->addUInt16(self::UINT16);
 		$this->assertEquals(2+1+2, strlen($writer->getBinary()));
 		$this->assertEquals(chr(11).chr(130).chr(0).chr(11).chr(130), $writer->getBinary());
-		
 	}
 
+	function testVarIndexedString() {
+		$writer = new StringWriter(StringWriter::LE);
+		$writer->addUInt16(self::UINT16);
+		$writer->addIndexedString(8, "The cat is on the mat.");
+		$writer->addUInt16(self::UINT16);
+		$this->assertEquals(2+1+22+2, strlen($writer->getBinary()));
+		$this->assertEquals(chr(11).chr(130).chr(22)."The cat is on the mat.".chr(11).chr(130), $writer->getBinary());
+	}
+
+	function testVarIndexedStringMax() {
+		$expected = random_bytes(255);
+		$writer = new StringWriter(StringWriter::LE);
+		$writer->addUInt16(self::UINT16);
+		$writer->addIndexedString(8, $expected);
+		$writer->addUInt16(self::UINT16);
+		$this->assertEquals(2+1+255+2, strlen($writer->getBinary()));
+		$this->assertEquals(chr(11).chr(130).chr(255).$expected.chr(11).chr(130), $writer->getBinary());
+	}
+
+	function testVarIndexedStringOverflow() {
+		$expected = random_bytes(256);
+		$writer = new StringWriter(StringWriter::LE);
+		$writer->addUInt16(self::UINT16);
+		$this->expectException(\RuntimeException::class);
+		$this->expectExceptionMessage("string length 256, max index length 255");
+		$writer->addIndexedString(8, $expected);
+	}
+
+	function testVarIndexedStringShort() {
+		$expected = random_bytes(4096);
+		$writer = new StringWriter(StringWriter::LE);
+		$writer->addIndexedString(16, $expected);
+		$this->assertEquals(2+4096, strlen($writer->getBinary()));
+		$this->assertEquals(chr(0).chr(16).$expected, $writer->getBinary());
+	}
+
+	function testVarIndexedStringLong() {
+		$expected = random_bytes(4096);
+		$writer = new StringWriter(StringWriter::LE);
+		$writer->addIndexedString(32, $expected);
+		$this->assertEquals(4+4096, strlen($writer->getBinary()));
+		$this->assertEquals(chr(0).chr(16).chr(0).chr(0).$expected, $writer->getBinary());
+	}
+
+	function testVarIndexedStringLongLong() {
+		$expected = random_bytes(4096);
+		$writer = new StringWriter(StringWriter::LE);
+		$writer->addIndexedString(64, $expected);
+		$this->assertEquals(8+4096, strlen($writer->getBinary()));
+		$this->assertEquals(chr(0).chr(16).chr(0).chr(0).chr(0).chr(0).chr(0).chr(0).$expected, $writer->getBinary());
+	}
+
+	function testFixedIndexedStringEmpty() {
+		$writer = new StringWriter(StringWriter::LE);
+		$writer->addUInt16(self::UINT16);
+		$writer->addIndexedString(8, "", 10);
+		$writer->addUInt16(self::UINT16);
+		$this->assertEquals(2+1+10+2, strlen($writer->getBinary()));
+		$this->assertEquals(chr(11).chr(130).chr(0).str_repeat("\0", 10).chr(11).chr(130), $writer->getBinary());
+	}
+
+	function testFixedIndexedStringShort() {
+		$expected = "Ultima VI";
+		$writer = new StringWriter(StringWriter::LE);
+		$writer->addUInt16(self::UINT16);
+		$writer->addIndexedString(16, $expected, 10);
+		$writer->addUInt16(self::UINT16);
+		$this->assertEquals(2+2+10+2, strlen($writer->getBinary()));
+		$this->assertEquals(chr(11).chr(130).chr(9).chr(0).str_pad($expected, 10, "\0").chr(11).chr(130), $writer->getBinary());
+	}
+
+	function testFixedIndexedStringLong() {
+		$expected = "Ultima VI";
+		$writer = new StringWriter(StringWriter::LE);
+		$writer->addUInt16(self::UINT16);
+		$writer->addIndexedString(32, $expected, 10);
+		$writer->addUInt16(self::UINT16);
+		$this->assertEquals(2+4+10+2, strlen($writer->getBinary()));
+		$this->assertEquals(chr(11).chr(130).chr(9).chr(0).chr(0).chr(0).str_pad($expected, 10, "\0").chr(11).chr(130), $writer->getBinary());
+	}
+
+	function testFixedIndexedStringLongLong() {
+		$expected = "Ultima VI";
+		$writer = new StringWriter(StringWriter::LE);
+		$writer->addUInt16(self::UINT16);
+		$writer->addIndexedString(64, $expected, 10);
+		$writer->addUInt16(self::UINT16);
+		$this->assertEquals(2+8+10+2, strlen($writer->getBinary()));
+		$this->assertEquals(chr(11).chr(130).chr(9).chr(0).chr(0).chr(0).chr(0).chr(0).chr(0).chr(0).str_pad($expected, 10, "\0").chr(11).chr(130), $writer->getBinary());
+	}
+	
+	function testFixedIndexedOverflow() {
+		$expected = "Ultima VIII";
+		$writer = new StringWriter(StringWriter::LE);
+		$this->expectException(\RuntimeException::class);
+		$this->expectExceptionMessage("fixed length 10, string length 11");
+		$writer->addIndexedString(8, $expected, 10);
+	}
 }
