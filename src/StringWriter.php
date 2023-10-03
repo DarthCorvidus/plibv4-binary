@@ -116,6 +116,19 @@ class StringWriter {
 		$this->string .= str_pad($string, $fixedLength, "\0");
 	}
 	
+	function addIndexedString(int $width, string $string, int $fixedLength = 0) {
+		if(!in_array($width, array(8, 16, 32, 64))) {
+			throw new \RuntimeException("invalid index width, use 8, 16, 32, 64");
+		}
+		$len = strlen($string);
+		$max = pow($width, 2)-1;
+		if($len > $max) {
+			throw new \RuntimeException("string length ".$len.", max index length ".$max);
+		}
+		call_user_func(array($this, "addUint".$width), $len);
+		$this->string .= $string;
+	}
+
 	function getBinary(): string {
 		return $this->string;
 	}

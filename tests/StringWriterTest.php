@@ -143,9 +143,9 @@ class StringWriterTest extends TestCase {
 	function testVarIndexedStringEmpty() {
 		$writer = new StringWriter(StringWriter::LE);
 		$writer->addUInt16(self::UINT16);
-		$writer->addIndexedString(1, "", 10);
+		$writer->addIndexedString(8, "", 10);
 		$writer->addUInt16(self::UINT16);
-		$this->assertEquals(2+10+2, strlen($writer->getBinary()));
+		$this->assertEquals(2+1+2, strlen($writer->getBinary()));
 		$this->assertEquals(chr(11).chr(130).chr(0).chr(11).chr(130), $writer->getBinary());
 		
 	}
