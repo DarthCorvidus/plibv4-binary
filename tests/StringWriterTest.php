@@ -71,5 +71,83 @@ class StringWriterTest extends TestCase {
 		$this->assertEquals(self::UINT32, \IntVal::uint32LE()->getValue(substr($string, 3, 4)));
 		$this->assertEquals(self::UINT64, \IntVal::uint64LE()->getValue(substr($string, 7, 8)));
 	}
+	
+	function testVarStringCZero() {
+		$writer = new StringWriter(StringWriter::LE);
+		$writer->addUInt16(self::UINT16);
+		$writer->addStringC("");
+		$writer->addUInt16(self::UINT16);
+		$this->assertEquals(chr(11).chr(130).chr(0).chr(11).chr(130), $writer->getBinary());
+	}
+
+	function testVarStringCOne() {
+		$writer = new StringWriter(StringWriter::LE);
+		$writer->addUInt16(self::UINT16);
+		$writer->addStringC("s");
+		$writer->addUInt16(self::UINT16);
+		$this->assertEquals(chr(11).chr(130)."s".chr(0).chr(11).chr(130), $writer->getBinary());
+	}
+
+	function testVarStringCMore() {
+		$writer = new StringWriter(StringWriter::LE);
+		$writer->addUInt16(self::UINT16);
+		$writer->addStringC("More");
+		$writer->addUInt16(self::UINT16);
+		$this->assertEquals(chr(11).chr(130)."More".chr(0).chr(11).chr(130), $writer->getBinary());
+	}
+
+	function testFixedStringCZero() {
+		$writer = new StringWriter(StringWriter::LE);
+		$writer->addUInt16(self::UINT16);
+		$writer->addStringC("", 10);
+		$writer->addUInt16(self::UINT16);
+		$this->assertEquals(2+10+2, strlen($writer->getBinary()));
+		$this->assertEquals(chr(11).chr(130).str_pad("", 10, "\0").chr(11).chr(130), $writer->getBinary());
+	}
+	
+	function testFixedStringCOne() {
+		$writer = new StringWriter(StringWriter::LE);
+		$writer->addUInt16(self::UINT16);
+		$writer->addStringC("1", 10);
+		$writer->addUInt16(self::UINT16);
+		$this->assertEquals(2+10+2, strlen($writer->getBinary()));
+		$this->assertEquals(chr(11).chr(130).str_pad("1", 10, "\0").chr(11).chr(130), $writer->getBinary());
+	}
+	
+	function testFixedStringCMore() {
+		$writer = new StringWriter(StringWriter::LE);
+		$writer->addUInt16(self::UINT16);
+		$writer->addStringC("More", 10);
+		$writer->addUInt16(self::UINT16);
+		$this->assertEquals(2+10+2, strlen($writer->getBinary()));
+		$this->assertEquals(chr(11).chr(130).str_pad("More", 10, "\0").chr(11).chr(130), $writer->getBinary());
+	}
+
+	function testFixedStringCNine() {
+		$writer = new StringWriter(StringWriter::LE);
+		$writer->addUInt16(self::UINT16);
+		$writer->addStringC("Ultima VI", 10);
+		$writer->addUInt16(self::UINT16);
+		$this->assertEquals(2+10+2, strlen($writer->getBinary()));
+		$this->assertEquals(chr(11).chr(130).str_pad("Ultima VI", 10, "\0").chr(11).chr(130), $writer->getBinary());
+	}
+
+	function testFixedStringCOverflow() {
+		$writer = new StringWriter(StringWriter::LE);
+		$writer->addUInt16(self::UINT16);
+		$this->expectException(\RuntimeException::class);
+		$this->expectExceptionMessage("strlen 10 larger than allowed payload of 9");
+		$writer->addStringC("Ultima VII", 10);
+	}
+	
+	function testVarIndexedStringEmpty() {
+		$writer = new StringWriter(StringWriter::LE);
+		$writer->addUInt16(self::UINT16);
+		$writer->addIndexedString(1, "", 10);
+		$writer->addUInt16(self::UINT16);
+		$this->assertEquals(2+10+2, strlen($writer->getBinary()));
+		$this->assertEquals(chr(11).chr(130).chr(0).chr(11).chr(130), $writer->getBinary());
+		
+	}
 
 }

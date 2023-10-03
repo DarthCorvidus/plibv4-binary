@@ -96,16 +96,27 @@ class StringWriter {
 			$this->string .= \IntVal::uint64BE()->putValue($value);
 		}
 	}
-	
-	function addStringC(int $length, string $string) {
-		if(strlen($string)>$length) {
-			throw new \RuntimeException("string longer than given length of ".$length);
+	/**
+	 * C type, null terminated string. If $padlength is 0, the string will be
+	 * variable, ie a three byte string will take up four bytes and a six byte
+	 * string will take up seven bytes.
+	 * @param string $string
+	 * @param type $padlength
+	 * @throws \RuntimeException
+	 */
+	function addStringC(string $string, int $fixedLength = 0) {
+		if($fixedLength === 0) {
+			$this->string .= $string."\0";
+		return;
 		}
-		$this->string .= str_pad($string, $length+1, chr(0));
+		$len = strlen($string);
+		if($len>$fixedLength-1) {
+			throw new \RuntimeException("strlen ".$len." larger than allowed payload of ".($fixedLength-1));
+		}
+		$this->string .= str_pad($string, $fixedLength, "\0");
 	}
 	
 	function getBinary(): string {
 		return $this->string;
 	}
-	
 }
