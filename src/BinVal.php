@@ -9,7 +9,7 @@ interface BinVal {
 	/**
 	 * This is supposed to return a binary string ready to be written to a
 	 * binary file.
-	 * @param type $value
+	 * @param mixed $value
 	 */
 	function putValue($value): string;
 	/**
