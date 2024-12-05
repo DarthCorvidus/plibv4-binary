@@ -21,7 +21,17 @@
         <directory name="src" />
         <ignoreFiles>
             <directory name="vendor" />
+			<!-- I rarely use these classes, I might abandon them entirely.
+				 BinVal & cannot really be made type safe, as the BinVal
+				 interface cannot not know what PHP type a binary string will
+				 become.
+				 Apart from that, BinVal/BinStruct is far too convoluted for
+				 most purposes.
+			-->
 			<file name="src/BinVal.php" />
+			<file name="src/BinStruct.php" />
+			<file name="src/BinaryReader.php" />
+			<file name="src/BinaryWriter.php" />
 			<file name="src/IntVal.php" />
 			<file name="src/PrefixedStringVal.php" />
 			<file name="src/RawVal.php" />
