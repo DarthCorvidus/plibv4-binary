@@ -1,8 +1,8 @@
 <?php
 namespace plibv4\Binary;
 class StringWriter {
-	private $string;
-	private $endian;
+	private string $string;
+	private int $endian;
 	const SE = 1;
 	const LE = 2;
 	const BE = 3;
@@ -14,15 +14,15 @@ class StringWriter {
 		$this->endian = $endian;
 	}
 	
-	function addInt8(int $value) {
+	function addInt8(int $value): void {
 		$this->string .= \IntVal::int8()->putValue($value);
 	}
 
-	function addUInt8(int $value) {
+	function addUInt8(int $value): void {
 		$this->string .= \IntVal::uint8()->putValue($value);
 	}
 
-	function addInt16(int $value) {
+	function addInt16(int $value): void {
 		if($this->endian==self::SE) {
 			$this->string .= \IntVal::int16SE()->putValue($value);
 		}
@@ -32,11 +32,10 @@ class StringWriter {
 
 		if($this->endian==self::BE) {
 			throw new \RuntimeException("addInt16 is only compatible with SE byte order.");
-			$this->string .= \IntVal::int16BE()->putValue($value);
 		}
 	}
 
-	function addUInt16(int $value) {
+	function addUInt16(int $value): void {
 		if($this->endian==self::SE) {
 			$this->string .= \IntVal::uint16SE()->putValue($value);
 		}
@@ -49,7 +48,7 @@ class StringWriter {
 		}
 	}
 	
-	function addInt32(int $value) {
+	function addInt32(int $value): void {
 		if($this->endian==self::SE) {
 			$this->string .= \IntVal::int32SE()->putValue($value);
 		}
@@ -59,11 +58,10 @@ class StringWriter {
 
 		if($this->endian==self::BE) {
 			throw new \RuntimeException("addInt32 is only compatible with SE byte order.");
-			$this->string .= \IntVal::int32BE()->putValue($value);
 		}
 	}
 
-	function addUInt32(int $value) {
+	function addUInt32(int $value): void {
 		if($this->endian==self::SE) {
 			$this->string .= \IntVal::uint32SE()->putValue($value);
 		}
@@ -76,7 +74,7 @@ class StringWriter {
 		}
 	}
 
-	function addInt64(int $value) {
+	function addInt64(int $value): void {
 		if($this->endian==self::SE) {
 			$this->string .= \IntVal::int64SE()->putValue($value);
 		return;
@@ -84,7 +82,7 @@ class StringWriter {
 	throw new \RuntimeException("addInt64 is only compatible with SE byte order.");
 	}
 
-	function addUInt64(int $value) {
+	function addUInt64(int $value): void {
 		if($this->endian==self::SE) {
 			$this->string .= \IntVal::uint64SE()->putValue($value);
 		}
@@ -101,10 +99,10 @@ class StringWriter {
 	 * variable, ie a three byte string will take up four bytes and a six byte
 	 * string will take up seven bytes.
 	 * @param string $string
-	 * @param type $padlength
+	 * @param int $fixedLength
 	 * @throws \RuntimeException
 	 */
-	function addStringC(string $string, int $fixedLength = 0) {
+	function addStringC(string $string, int $fixedLength = 0): void {
 		if($fixedLength === 0) {
 			$this->string .= $string."\0";
 		return;
@@ -116,7 +114,7 @@ class StringWriter {
 		$this->string .= str_pad($string, $fixedLength, "\0");
 	}
 	
-	function addIndexedString(int $width, string $string, int $fixedLength = 0) {
+	function addIndexedString(int $width, string $string, int $fixedLength = 0): void {
 		if(!in_array($width, array(8, 16, 32, 64))) {
 			throw new \RuntimeException("invalid index width, use 8, 16, 32, 64");
 		}

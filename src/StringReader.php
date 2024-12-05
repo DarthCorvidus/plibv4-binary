@@ -1,9 +1,9 @@
 <?php
 namespace plibv4\Binary;
 class StringReader {
-	private $string;
-	private $endian;
-	private $pos;
+	private string $string;
+	private int $endian;
+	private int $pos;
 	const SE = 1;
 	const LE = 2;
 	const BE = 3;
@@ -16,49 +16,49 @@ class StringReader {
 		$this->pos = 0;
 	}
 	
-	function getInt8() {
+	function getInt8(): int {
 		$value = \IntVal::int8()->getValue(substr($this->string, $this->pos, 1));
 		$this->pos += 1;
 	return $value;
 	}
 	
-	function getInt16() {
+	function getInt16(): int {
 		if($this->endian==self::SE) {
 			$value = \IntVal::int16SE()->getValue(substr($this->string, $this->pos, 2));
 			$this->pos += 2;
-		} else {
-			throw new \RuntimeException("getInt16 not compatible with byte order LE/BE");
+		return $value;
 		}
-	return $value;
+	throw new \RuntimeException("getInt16 not compatible with byte order LE/BE");
 	}
 
-	function getInt32() {
+	function getInt32(): int {
 		if($this->endian==self::SE) {
 			$value = \IntVal::int32SE()->getValue(substr($this->string, $this->pos, 4));
 			$this->pos += 4;
 		} else {
-			throw new \RuntimeException("getInt16 not compatible with byte order LE/BE");
+			throw new \RuntimeException("getInt32 not compatible with byte order LE/BE");
 		}
 	return $value;
 	}
 
-	function getInt64() {
+	function getInt64(): int {
 		if($this->endian==self::SE) {
 			$value = \IntVal::int64SE()->getValue(substr($this->string, $this->pos, 8));
 			$this->pos += 8;
 		} else {
-			throw new \RuntimeException("getInt16 not compatible with byte order LE/BE");
+			throw new \RuntimeException("getInt64 not compatible with byte order LE/BE");
 		}
 	return $value;
 	}
 
-	function getUInt8() {
+	function getUInt8(): int {
 		$value = \IntVal::uint8()->getValue(substr($this->string, $this->pos, 1));
 		$this->pos += 1;
 	return $value;
 	}
 	
 	function getUInt16(): int {
+		$value = 0;
 		if($this->endian==self::SE) {
 			$value = \IntVal::uint16SE()->getValue(substr($this->string, $this->pos, 2));
 		}
@@ -72,7 +72,8 @@ class StringReader {
 	return $value;
 	}
 
-	function getUInt32() {
+	function getUInt32(): int {
+		$value = 0;
 		if($this->endian==self::SE) {
 			$value = \IntVal::uint32SE()->getValue(substr($this->string, $this->pos, 4));
 		}
@@ -86,7 +87,8 @@ class StringReader {
 	return $value;
 	}
 
-	function getUInt64() {
+	function getUInt64(): int {
+		$value = 0;
 		if($this->endian==self::SE) {
 			$value = \IntVal::uint64SE()->getValue(substr($this->string, $this->pos, 8));
 		}
@@ -120,11 +122,11 @@ class StringReader {
 	return $return;
 	}
 	
-	function getIndexedString($width, int $fixedLength = 0) {
+	function getIndexedString(int $width, int $fixedLength = 0): string {
 		if(!in_array($width, array(8, 16, 32, 64))) {
 			throw new \RuntimeException("invalid index width, use 8, 16, 32, 64");
 		}
-		$length = call_user_func(array($this, "getUint".$width));
+		$length = (int)call_user_func(array($this, "getUint".$width));
 		$return = substr($this->string, $this->pos, $length);
 		if($fixedLength==0) {
 			$this->pos += $length;

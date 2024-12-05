@@ -93,7 +93,7 @@ class IntVal implements BinVal {
 	return $return;
 	}
 	
-	function getValue(string $value) {
+	function getValue(string $value): int {
 		if($value==="") {
 			throw new RuntimeException("binary value is empty.");
 		}

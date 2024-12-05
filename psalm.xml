@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<psalm
+    errorLevel="1"
+    resolveFromConfigFile="true"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="https://getpsalm.org/schema/config"
+    xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
+    findUnusedBaselineEntry="true"
+    findUnusedCode="true"
+>
+	<issueHandlers>
+		<UnusedClass>
+			<errorLevel type="suppress">
+				<!-- this is a class library, therefore some code is unused -->
+				<file name="src/StringReader.php" />
+				<file name="src/StringWriter.php" />
+			</errorLevel>
+		</UnusedClass>
+	</issueHandlers>
+    <projectFiles>
+        <directory name="src" />
+        <ignoreFiles>
+            <directory name="vendor" />
+			<file name="src/BinVal.php" />
+			<file name="src/IntVal.php" />
+			<file name="src/PrefixedStringVal.php" />
+			<file name="src/RawVal.php" />
+			<file name="src/SkipVal.php" />
+			<file name="src/StringVal.php" />
+        </ignoreFiles>
+    </projectFiles>
+</psalm>
