@@ -10,11 +10,12 @@
  * 
  * @copyright (c) 2023 Claus-Christoph Küthe
  * @author Claus-Christoph Küthe <floss@vm01.telton.de>
+ * @implements BinVal<int>
  */
 class IntVal implements BinVal {
 	private $packchar;
 	private $size;
-	private function __construct($packchar, int $size) {
+	private function __construct(string $packchar, int $size) {
 		$this->packchar = $packchar;
 		$this->size = $size;
 	}
@@ -93,21 +94,40 @@ class IntVal implements BinVal {
 	return $return;
 	}
 	
-	function getValue(string $value): int {
-		if($value==="") {
+	/**
+	 * 
+	 * @param string $string
+	 * @return int
+	 * @throws RuntimeException
+	 */
+	function getValue(string $string): int {
+		if($string==="") {
 			throw new RuntimeException("binary value is empty.");
 		}
-		$unpack = unpack($this->getPackChar(), $value);
-	return $unpack[1];
+		$unpack = unpack($this->getPackChar(), $string);
+	return (int)$unpack[1];
 	}
 	
 	function getLength(): int {
 		return $this->size;
 	}
-	
+	/**
+	 * 
+	 * @param int $value
+	 * @return string
+	 * @throws RuntimeException
+	 */
 	function putValue($value): string {
+		/**
+		 * Yes, but the compiler does not know about Docblock.
+		 * @psalm-suppress DocblockTypeContradiction
+		 */
 		if($value==="") {
-			throw new RuntimeException("binary value is empty.");
+			throw new RuntimeException("parameter \$value is empty");
+		}
+		/** @psalm-suppress DocblockTypeContradiction */
+		if(!is_int($value)) {
+			throw new RuntimeException("parameter \$value is not an integer, but ".gettype($value));
 		}
 		return pack($this->getPackChar(), $value);
 	}

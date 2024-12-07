@@ -72,8 +72,15 @@ class IntValTest extends TestCase {
 	function testPutEmpty() {
 		$intval = IntVal::uint8();
 		$this->expectException(RuntimeException::class);
-		$this->expectExceptionMessage("binary value is empty.");
+		$this->expectExceptionMessage("parameter \$value is empty");
 		$intval->putValue("");
+	}
+
+	function testPutWrongType() {
+		$intval = IntVal::uint8();
+		$this->expectException(RuntimeException::class);
+		$this->expectExceptionMessage("parameter \$value is not an integer, but string");
+		$intval->putValue("17");
 	}
 	
 }

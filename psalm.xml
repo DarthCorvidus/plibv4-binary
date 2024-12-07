@@ -28,15 +28,12 @@
 				 Apart from that, BinVal/BinStruct is far too convoluted for
 				 most purposes.
 			-->
-			<!-- <file name="src/BinVal.php" /> -->
 			<file name="src/BinStruct.php" />
 			<file name="src/BinaryReader.php" />
 			<file name="src/BinaryWriter.php" />
-			<file name="src/IntVal.php" />
 			<file name="src/PrefixedStringVal.php" />
 			<file name="src/RawVal.php" />
 			<file name="src/SkipVal.php" />
-			<!-- <file name="src/StringVal.php" /> -->
         </ignoreFiles>
     </projectFiles>
 </psalm>
