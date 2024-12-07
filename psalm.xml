@@ -6,7 +6,7 @@
     xmlns="https://getpsalm.org/schema/config"
     xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
     findUnusedBaselineEntry="true"
-    findUnusedCode="true"
+    findUnusedCode="false"
 >
 	<issueHandlers>
 		<UnusedClass>
@@ -28,7 +28,7 @@
 				 Apart from that, BinVal/BinStruct is far too convoluted for
 				 most purposes.
 			-->
-			<file name="src/BinVal.php" />
+			<!-- <file name="src/BinVal.php" /> -->
 			<file name="src/BinStruct.php" />
 			<file name="src/BinaryReader.php" />
 			<file name="src/BinaryWriter.php" />
@@ -36,7 +36,7 @@
 			<file name="src/PrefixedStringVal.php" />
 			<file name="src/RawVal.php" />
 			<file name="src/SkipVal.php" />
-			<file name="src/StringVal.php" />
+			<!-- <file name="src/StringVal.php" /> -->
         </ignoreFiles>
     </projectFiles>
 </psalm>

@@ -6,10 +6,11 @@
  * Also note that StringVal does not care about multibyte character sets!
  * @copyright (c) 2023 Claus-Christoph Küthe
  * @author Claus-Christoph Küthe <floss@vm01.telton.de>
+ * @implements BinVal<string>
  */
 class StringVal implements BinVal {
-	private $length;
-	private $pad;
+	private int $length;
+	private string $pad;
 	function __construct(int $length) {
 		$this->length = $length;
 		$this->pad = "\0";
@@ -29,7 +30,7 @@ class StringVal implements BinVal {
 	 * @return string
 	 * @throws InvalidArgumentException
 	 */
-	public function getValue(string $string) {
+	public function getValue(string $string): string {
 		$str = substr($string, 0, $this->length);
 		if(strlen($str)<$this->length) {
 			throw new InvalidArgumentException("input too short, ".$this->length." expected.");
@@ -51,7 +52,7 @@ class StringVal implements BinVal {
 	/**
 	 * Takes string and turns it into a null-terminated string, padding with
 	 * null bytes if necessary.
-	 * @param type $value
+	 * @param string $value
 	 * @return string
 	 * @throws InvalidArgumentException
 	 */

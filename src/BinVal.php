@@ -2,14 +2,16 @@
 /**
  * Interface for a single binary value, to be read or written from or to a file
  * or string.
+ * @template T
  * @copyright (c) 2023 Claus-Christoph Küthe
  * @author Claus-Christoph Küthe <floss@vm01.telton.de>
+ * 
  */
 interface BinVal {
 	/**
 	 * This is supposed to return a binary string ready to be written to a
 	 * binary file.
-	 * @param mixed $value
+	 * @param T $value
 	 */
 	function putValue($value): string;
 	/**
@@ -17,6 +19,7 @@ interface BinVal {
 	 * becomes 100 when read as int.
 	 * 
 	 * @param string $string
+	 * @return T
 	 */
 	function getValue(string $string);
 	/**
