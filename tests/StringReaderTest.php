@@ -110,7 +110,7 @@ class StringReaderTest extends TestCase {
 		$string = chr(0);
 		$string .= \IntVal::uint16LE()->putValue(self::UINT16);
 		$reader = new StringReader($string, StringReader::LE);
-		$this->assertEquals("", $reader->getIndexedString(8));
+		$this->assertEquals("", $reader->getString8());
 		$this->assertEquals(self::UINT16, $reader->getUInt16());
 	}
 	
@@ -120,7 +120,7 @@ class StringReaderTest extends TestCase {
 		$string .= $expected;
 		$string .= \IntVal::uint16LE()->putValue(self::UINT16);
 		$reader = new StringReader($string, StringReader::LE);
-		$this->assertEquals($expected, $reader->getIndexedString(8));
+		$this->assertEquals($expected, $reader->getString8());
 		$this->assertEquals(self::UINT16, $reader->getUInt16());
 	}
 
@@ -130,7 +130,7 @@ class StringReaderTest extends TestCase {
 		$string .= $expected;
 		$string .= \IntVal::uint16LE()->putValue(self::UINT16);
 		$reader = new StringReader($string, StringReader::LE);
-		$this->assertEquals($expected, $reader->getIndexedString(16));
+		$this->assertEquals($expected, $reader->getString16());
 		$this->assertEquals(self::UINT16, $reader->getUInt16());
 	}
 
@@ -140,7 +140,7 @@ class StringReaderTest extends TestCase {
 		$string .= $expected;
 		$string .= \IntVal::uint16LE()->putValue(self::UINT16);
 		$reader = new StringReader($string, StringReader::LE);
-		$this->assertEquals($expected, $reader->getIndexedString(32));
+		$this->assertEquals($expected, $reader->getString32());
 		$this->assertEquals(self::UINT16, $reader->getUInt16());
 	}
 
@@ -150,7 +150,7 @@ class StringReaderTest extends TestCase {
 		$string .= $expected;
 		$string .= \IntVal::uint16LE()->putValue(self::UINT16);
 		$reader = new StringReader($string, StringReader::LE);
-		$this->assertEquals($expected, $reader->getIndexedString(64));
+		$this->assertEquals($expected, $reader->getString64());
 		$this->assertEquals(self::UINT16, $reader->getUInt16());
 	}
 	
@@ -160,7 +160,7 @@ class StringReaderTest extends TestCase {
 		$string .= $expected;
 		$string .= \IntVal::uint16LE()->putValue(self::UINT16);
 		$reader = new StringReader($string, StringReader::LE);
-		$this->assertEquals($expected, $reader->getIndexedString(8));
+		$this->assertEquals($expected, $reader->getString8());
 		$this->assertEquals(self::UINT16, $reader->getUInt16());
 	}
 
@@ -168,7 +168,7 @@ class StringReaderTest extends TestCase {
 		$string = str_repeat("\0", 11);
 		$string .= \IntVal::uint16LE()->putValue(self::UINT16);
 		$reader = new StringReader($string, StringReader::LE);
-		$this->assertEquals("", $reader->getIndexedString(8, 10));
+		$this->assertEquals("", $reader->getString8(10));
 		$this->assertEquals(self::UINT16, $reader->getUInt16());
 	}
 
@@ -180,7 +180,7 @@ class StringReaderTest extends TestCase {
 		$string .= random_bytes(10);
 		$string .= \IntVal::uint16LE()->putValue(self::UINT16);
 		$reader = new StringReader($string, StringReader::LE);
-		$this->assertEquals($expected, $reader->getIndexedString(8, 20));
+		$this->assertEquals($expected, $reader->getString8(20));
 		$this->assertEquals(self::UINT16, $reader->getUInt16());
 	}
 	
@@ -192,7 +192,7 @@ class StringReaderTest extends TestCase {
 		$string .= random_bytes(10);
 		$string .= \IntVal::uint16LE()->putValue(self::UINT16);
 		$reader = new StringReader($string, StringReader::LE);
-		$this->assertEquals($expected, $reader->getIndexedString(16, 20));
+		$this->assertEquals($expected, $reader->getString16(20));
 		$this->assertEquals(self::UINT16, $reader->getUInt16());
 	}
 
@@ -203,7 +203,7 @@ class StringReaderTest extends TestCase {
 		$string .= str_repeat("\0", 10);
 		$string .= \IntVal::uint16LE()->putValue(self::UINT16);
 		$reader = new StringReader($string, StringReader::LE);
-		$this->assertEquals($expected, $reader->getIndexedString(32, 20));
+		$this->assertEquals($expected, $reader->getString32(20));
 		$this->assertEquals(self::UINT16, $reader->getUInt16());
 	}
 
@@ -214,7 +214,7 @@ class StringReaderTest extends TestCase {
 		$string .= str_repeat("\0", 10);
 		$string .= \IntVal::uint16LE()->putValue(self::UINT16);
 		$reader = new StringReader($string, StringReader::LE);
-		$this->assertEquals($expected, $reader->getIndexedString(64, 20));
+		$this->assertEquals($expected, $reader->getString64(20));
 		$this->assertEquals(self::UINT16, $reader->getUInt16());
 	}
 }

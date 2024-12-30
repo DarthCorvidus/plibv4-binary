@@ -6,6 +6,7 @@ class StringWriter {
 	const SE = 1;
 	const LE = 2;
 	const BE = 3;
+	const MAX = array(8 => 255, 16 => 65535, 32 => 4294967295, 64 => 9223372036854775807);
 	function __construct(int $endian) {
 		if(!in_array($endian, array(self::SE, self::LE, self::BE))) {
 			throw new \RuntimeException("invalid byte order, use StringWriter::SE, StringWriter::LE, StringWriter::BE");
@@ -114,7 +115,7 @@ class StringWriter {
 		$this->string .= str_pad($string, $fixedLength, "\0");
 	}
 	
-	function addIndexedString(int $width, string $string, int $fixedLength = 0): void {
+	private function addIndexedString(int $width, string $string, int $fixedLength = 0): void {
 		if(!in_array($width, array(8, 16, 32, 64))) {
 			throw new \RuntimeException("invalid index width, use 8, 16, 32, 64");
 		}
@@ -122,17 +123,75 @@ class StringWriter {
 		if($fixedLength!==0 && $len>$fixedLength) {
 			throw new \RuntimeException("fixed length ".$fixedLength.", string length ".$len);
 		}
-		$max = pow(2, $width)-1;
+		$max = self::MAX[$width];
 		if($len > $max) {
 			throw new \RuntimeException("string length ".$len.", max index length ".$max);
 		}
-		call_user_func(array($this, "addUint".$width), $len);
+		/**
+		 * I am not terribly fond of case...switch, but call_user_func comes
+		 * with a hefty price tag.
+		 */
+		//call_user_func(array($this, "addUint".$width), $len);
+		switch ($width) {
+			case 8:
+				$this->addUInt8($len);
+			break;
+			case 16:
+				$this->addUInt16($len);
+			break;
+			case 32:
+				$this->addUInt32($len);
+			break;
+			case 64:
+				$this->addUInt64($len);
+			break;
+		}
+		//call_user_func(array($this, "addUint".$width), $len);
 		if($fixedLength!==0) {
 			$this->string .= str_pad($string, $fixedLength, "\0");
 		return;
 		}
 		$this->string .= $string;
 	}
+	
+	/**
+	 * Add an indexed string with a maximum length of 255 bytes
+	 * @param string $string
+	 * @param int $fixedLength
+	 */
+	function addString8(string $string, int $fixedLength = 0): void {
+		$this->addIndexedString(8, $string, $fixedLength);
+	}
+
+	/**
+	 * Add an indexed string with a maximum length of 65.535 bytes
+	 * @param string $string
+	 * @param int $fixedLength
+	 */
+	function addString16(string $string, int $fixedLength = 0): void {
+		$this->addIndexedString(16, $string, $fixedLength);
+	}
+
+	/**
+	 * Add an indexed string with a maximum length of 4.294.967.295 bytes (or
+	 * 2.147.483.647 on 32bit-systems, as PHP uses signed integers)
+	 * @param string $string
+	 * @param int $fixedLength
+	 */
+	function addString32(string $string, int $fixedLength = 0): void {
+		$this->addIndexedString(32, $string, $fixedLength);
+	}
+
+	/**
+	 * Add an indexed string with a maximum length of 9.223.372.036.854.775.807
+	 * (please send me an E-Mail if you found a use case)
+	 * @param string $string
+	 * @param int $fixedLength
+	 */
+	function addString64(string $string, int $fixedLength = 0): void {
+		$this->addIndexedString(64, $string, $fixedLength);
+	}
+	
 
 	function getBinary(): string {
 		return $this->string;

@@ -122,11 +122,26 @@ class StringReader {
 	return $return;
 	}
 	
-	function getIndexedString(int $width, int $fixedLength = 0): string {
+	private function getIndexedString(int $width, int $fixedLength = 0): string {
 		if(!in_array($width, array(8, 16, 32, 64))) {
 			throw new \RuntimeException("invalid index width, use 8, 16, 32, 64");
 		}
-		$length = (int)call_user_func(array($this, "getUint".$width));
+		//$length = (int)call_user_func(array($this, "getUint".$width));
+		$length = 0;
+		switch ($width) {
+			case 8:
+				$length = $this->getUInt8();
+			break;
+			case 16:
+				$length = $this->getUInt16();
+			break;
+			case 32:
+				$length = $this->getUInt32();
+			break;
+			case 64:
+				$length = $this->getUInt64();
+			break;
+		}
 		$return = substr($this->string, $this->pos, $length);
 		if($fixedLength==0) {
 			$this->pos += $length;
@@ -134,5 +149,21 @@ class StringReader {
 			$this->pos += $fixedLength;
 		}
 	return $return;
+	}
+	
+	public function getString8(int $fixedLength = 0): string {
+		return $this->getIndexedString(8, $fixedLength);
+	}
+	
+	public function getString16(int $fixedLength = 0): string {
+		return $this->getIndexedString(16, $fixedLength);
+	}
+	
+	public function getString32(int $fixedLength = 0): string {
+		return $this->getIndexedString(32, $fixedLength);
+	}
+	
+	public function getString64(int $fixedLength = 0): string {
+		return $this->getIndexedString(64, $fixedLength);
 	}
 }
