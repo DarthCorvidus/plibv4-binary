@@ -11,12 +11,12 @@ class StringReaderTest extends TestCase {
 	const INT16  =       -15212;
 	const INT32  =  -1932231121;
 	const INT64  =-162832231121;
-	function testConstruct() {
+	function testConstruct(): void {
 		$writer = new StringReader("", StringReader::SE);
 		$this->assertInstanceOf(StringReader::class, $writer);
 	}
 	
-	function testIntSE() {
+	function testIntSE(): void {
 		$string = \IntVal::int8()->putValue(self::INT8);
 		$string .= \IntVal::int16SE()->putValue(self::INT16);
 		$string .= \IntVal::int32SE()->putValue(self::INT32);
@@ -29,7 +29,7 @@ class StringReaderTest extends TestCase {
 		$this->assertEquals(self::INT64, $reader->getInt64());
 	}
 	
-	function testUIntSE() {
+	function testUIntSE(): void {
 		$string = \IntVal::uint8()->putValue(self::UINT8);
 		$string .= \IntVal::uint16SE()->putValue(self::UINT16);
 		$string .= \IntVal::uint32SE()->putValue(self::UINT32);
@@ -42,7 +42,7 @@ class StringReaderTest extends TestCase {
 		$this->assertEquals(self::UINT64, $reader->getUInt64());
 	}
 
-	function testUIntLE() {
+	function testUIntLE(): void {
 		$string = \IntVal::uint8()->putValue(self::UINT8);
 		$string .= \IntVal::uint16LE()->putValue(self::UINT16);
 		$string .= \IntVal::uint32LE()->putValue(self::UINT32);
@@ -55,7 +55,7 @@ class StringReaderTest extends TestCase {
 		$this->assertEquals(self::UINT64, $reader->getUInt64());
 	}
 
-	function testUIntBE() {
+	function testUIntBE(): void {
 		$string = \IntVal::uint8()->putValue(self::UINT8);
 		$string .= \IntVal::uint16BE()->putValue(self::UINT16);
 		$string .= \IntVal::uint32BE()->putValue(self::UINT32);
@@ -68,7 +68,7 @@ class StringReaderTest extends TestCase {
 		$this->assertEquals(self::UINT64, $reader->getUInt64());
 	}
 	
-	function testVarStringCEmpty() {
+	function testVarStringCEmpty(): void {
 		$expected = "";
 		$string = $expected."\0";
 		$string .= \IntVal::uint16LE()->putValue(self::UINT16);
@@ -77,7 +77,7 @@ class StringReaderTest extends TestCase {
 		$this->assertEquals(self::UINT16, $reader->getUInt16());
 	}
 	
-	function testVarStringC() {
+	function testVarStringC(): void {
 		$expected = "The cat is on the mat.";
 		$string = $expected."\0";
 		$string .= \IntVal::uint16LE()->putValue(self::UINT16);
@@ -86,7 +86,7 @@ class StringReaderTest extends TestCase {
 		$this->assertEquals(self::UINT16, $reader->getUInt16());
 	}
 	
-	function testFixedStringC() {
+	function testFixedStringC(): void {
 		$expected = "Ultima";
 		$string = str_pad($expected, 10, "\0");
 		$string .= \IntVal::uint16LE()->putValue(self::UINT16);
@@ -95,7 +95,7 @@ class StringReaderTest extends TestCase {
 		$this->assertEquals(self::UINT16, $reader->getUInt16());
 	}
 
-	function testVarStringCOverflov() {
+	function testVarStringCOverflov(): void {
 		$expected = "Ultima VII";
 		$string = $expected;
 		$string .= \IntVal::uint16LE()->putValue(self::UINT16);
@@ -106,7 +106,7 @@ class StringReaderTest extends TestCase {
 		$this->assertEquals(self::UINT16, $reader->getUInt16());
 	}
 
-	function testVarIndexedStringEmpty() {
+	function testVarIndexedStringEmpty(): void {
 		$string = chr(0);
 		$string .= \IntVal::uint16LE()->putValue(self::UINT16);
 		$reader = new StringReader($string, StringReader::LE);
@@ -114,7 +114,7 @@ class StringReaderTest extends TestCase {
 		$this->assertEquals(self::UINT16, $reader->getUInt16());
 	}
 	
-	function testVarIndexedStringTiny() {
+	function testVarIndexedStringTiny(): void {
 		$expected = "Ultima VII";
 		$string = chr(10);
 		$string .= $expected;
@@ -124,7 +124,7 @@ class StringReaderTest extends TestCase {
 		$this->assertEquals(self::UINT16, $reader->getUInt16());
 	}
 
-	function testVarIndexedStringShort() {
+	function testVarIndexedStringShort(): void {
 		$expected = "Ultima VII";
 		$string = chr(10).chr(0);
 		$string .= $expected;
@@ -134,7 +134,7 @@ class StringReaderTest extends TestCase {
 		$this->assertEquals(self::UINT16, $reader->getUInt16());
 	}
 
-	function testVarIndexedStringLong() {
+	function testVarIndexedStringLong(): void {
 		$expected = "Ultima VII";
 		$string = chr(10).chr(0).chr(0).chr(0);
 		$string .= $expected;
@@ -144,7 +144,7 @@ class StringReaderTest extends TestCase {
 		$this->assertEquals(self::UINT16, $reader->getUInt16());
 	}
 
-	function testVarIndexedStringLongLong() {
+	function testVarIndexedStringLongLong(): void {
 		$expected = "Ultima VII";
 		$string = chr(10).chr(0).chr(0).chr(0).chr(0).chr(0).chr(0).chr(0);
 		$string .= $expected;
@@ -154,7 +154,7 @@ class StringReaderTest extends TestCase {
 		$this->assertEquals(self::UINT16, $reader->getUInt16());
 	}
 	
-	function testVarIndexedFull() {
+	function testVarIndexedFull(): void {
 		$expected = random_bytes(255);
 		$string = chr(255);
 		$string .= $expected;
@@ -164,7 +164,7 @@ class StringReaderTest extends TestCase {
 		$this->assertEquals(self::UINT16, $reader->getUInt16());
 	}
 
-	function testFixedIndexedStringEmpty() {
+	function testFixedIndexedStringEmpty(): void {
 		$string = str_repeat("\0", 11);
 		$string .= \IntVal::uint16LE()->putValue(self::UINT16);
 		$reader = new StringReader($string, StringReader::LE);
@@ -172,7 +172,7 @@ class StringReaderTest extends TestCase {
 		$this->assertEquals(self::UINT16, $reader->getUInt16());
 	}
 
-	function testFixedIndexedStringTiny() {
+	function testFixedIndexedStringTiny(): void {
 		$expected = "Ultima VII";
 		$string = chr(10);
 		$string .= $expected;
@@ -184,7 +184,7 @@ class StringReaderTest extends TestCase {
 		$this->assertEquals(self::UINT16, $reader->getUInt16());
 	}
 	
-	function testFixedIndexedStringShort() {
+	function testFixedIndexedStringShort(): void {
 		$expected = "Ultima VII";
 		$string = chr(10).chr(0);
 		$string .= $expected;
@@ -196,7 +196,7 @@ class StringReaderTest extends TestCase {
 		$this->assertEquals(self::UINT16, $reader->getUInt16());
 	}
 
-	function testFixedIndexedStringLong() {
+	function testFixedIndexedStringLong(): void {
 		$expected = "Ultima VII";
 		$string = chr(10).chr(0).chr(0).chr(0);
 		$string .= $expected;
@@ -207,7 +207,7 @@ class StringReaderTest extends TestCase {
 		$this->assertEquals(self::UINT16, $reader->getUInt16());
 	}
 
-	function testFixedIndexedStringLongLong() {
+	function testFixedIndexedStringLongLong(): void {
 		$expected = "Ultima VII";
 		$string = chr(10).chr(0).chr(0).chr(0).chr(0).chr(0).chr(0).chr(0);
 		$string .= $expected;

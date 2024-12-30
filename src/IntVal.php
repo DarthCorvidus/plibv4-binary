@@ -113,7 +113,7 @@ class IntVal implements BinVal {
 	}
 	/**
 	 * 
-	 * @param int $value
+	 * @param mixed $value
 	 * @return string
 	 * @throws RuntimeException
 	 */

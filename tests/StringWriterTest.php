@@ -11,12 +11,12 @@ class StringWriterTest extends TestCase {
 	const INT16  =       -15212;
 	const INT32  =  -1932231121;
 	const INT64  =-162832231121;
-	function testConstruct() {
+	function testConstruct(): void {
 		$writer = new StringWriter(StringWriter::SE);
 		$this->assertInstanceOf(StringWriter::class, $writer);
 	}
 	
-	function testIntSE() {
+	function testIntSE(): void {
 		$writer = new StringWriter(StringWriter::SE);
 		$writer->addInt8(self::INT8);
 		$writer->addInt16(self::INT16);
@@ -30,7 +30,7 @@ class StringWriterTest extends TestCase {
 		$this->assertEquals(self::INT64, \IntVal::int64SE()->getValue(substr($string, 7, 8)));
 	}
 	
-	function testUIntSE() {
+	function testUIntSE(): void {
 		$writer = new StringWriter(StringWriter::SE);
 		$writer->addUInt8(self::UINT8);
 		$writer->addUInt16(self::UINT16);
@@ -44,7 +44,7 @@ class StringWriterTest extends TestCase {
 		$this->assertEquals(self::UINT64, \IntVal::uint64SE()->getValue(substr($string, 7, 8)));
 	}
 	
-	function testUIntBE() {
+	function testUIntBE(): void {
 		$writer = new StringWriter(StringWriter::BE);
 		$writer->addUInt8(self::UINT8);
 		$writer->addUInt16(self::UINT16);
@@ -58,7 +58,7 @@ class StringWriterTest extends TestCase {
 		$this->assertEquals(self::UINT64, \IntVal::uint64BE()->getValue(substr($string, 7, 8)));
 	}
 
-	function testUIntLE() {
+	function testUIntLE(): void {
 		$writer = new StringWriter(StringWriter::LE);
 		$writer->addUInt8(self::UINT8);
 		$writer->addUInt16(self::UINT16);
@@ -72,7 +72,7 @@ class StringWriterTest extends TestCase {
 		$this->assertEquals(self::UINT64, \IntVal::uint64LE()->getValue(substr($string, 7, 8)));
 	}
 	
-	function testVarStringCZero() {
+	function testVarStringCZero(): void {
 		$writer = new StringWriter(StringWriter::LE);
 		$writer->addUInt16(self::UINT16);
 		$writer->addStringC("");
@@ -80,7 +80,7 @@ class StringWriterTest extends TestCase {
 		$this->assertEquals(chr(11).chr(130).chr(0).chr(11).chr(130), $writer->getBinary());
 	}
 
-	function testVarStringCOne() {
+	function testVarStringCOne(): void {
 		$writer = new StringWriter(StringWriter::LE);
 		$writer->addUInt16(self::UINT16);
 		$writer->addStringC("s");
@@ -88,7 +88,7 @@ class StringWriterTest extends TestCase {
 		$this->assertEquals(chr(11).chr(130)."s".chr(0).chr(11).chr(130), $writer->getBinary());
 	}
 
-	function testVarStringCMore() {
+	function testVarStringCMore(): void {
 		$writer = new StringWriter(StringWriter::LE);
 		$writer->addUInt16(self::UINT16);
 		$writer->addStringC("More");
@@ -96,7 +96,7 @@ class StringWriterTest extends TestCase {
 		$this->assertEquals(chr(11).chr(130)."More".chr(0).chr(11).chr(130), $writer->getBinary());
 	}
 
-	function testFixedStringCZero() {
+	function testFixedStringCZero(): void {
 		$writer = new StringWriter(StringWriter::LE);
 		$writer->addUInt16(self::UINT16);
 		$writer->addStringC("", 10);
@@ -105,7 +105,7 @@ class StringWriterTest extends TestCase {
 		$this->assertEquals(chr(11).chr(130).str_pad("", 10, "\0").chr(11).chr(130), $writer->getBinary());
 	}
 	
-	function testFixedStringCOne() {
+	function testFixedStringCOne(): void {
 		$writer = new StringWriter(StringWriter::LE);
 		$writer->addUInt16(self::UINT16);
 		$writer->addStringC("1", 10);
@@ -114,7 +114,7 @@ class StringWriterTest extends TestCase {
 		$this->assertEquals(chr(11).chr(130).str_pad("1", 10, "\0").chr(11).chr(130), $writer->getBinary());
 	}
 	
-	function testFixedStringCMore() {
+	function testFixedStringCMore(): void {
 		$writer = new StringWriter(StringWriter::LE);
 		$writer->addUInt16(self::UINT16);
 		$writer->addStringC("More", 10);
@@ -123,7 +123,7 @@ class StringWriterTest extends TestCase {
 		$this->assertEquals(chr(11).chr(130).str_pad("More", 10, "\0").chr(11).chr(130), $writer->getBinary());
 	}
 
-	function testFixedStringCNine() {
+	function testFixedStringCNine(): void {
 		$writer = new StringWriter(StringWriter::LE);
 		$writer->addUInt16(self::UINT16);
 		$writer->addStringC("Ultima VI", 10);
@@ -132,7 +132,7 @@ class StringWriterTest extends TestCase {
 		$this->assertEquals(chr(11).chr(130).str_pad("Ultima VI", 10, "\0").chr(11).chr(130), $writer->getBinary());
 	}
 
-	function testFixedStringCOverflow() {
+	function testFixedStringCOverflow(): void {
 		$writer = new StringWriter(StringWriter::LE);
 		$writer->addUInt16(self::UINT16);
 		$this->expectException(\RuntimeException::class);
@@ -140,7 +140,7 @@ class StringWriterTest extends TestCase {
 		$writer->addStringC("Ultima VII", 10);
 	}
 	
-	function testVarIndexedStringEmpty() {
+	function testVarIndexedStringEmpty(): void {
 		$writer = new StringWriter(StringWriter::LE);
 		$writer->addUInt16(self::UINT16);
 		$writer->addString8("");
@@ -149,7 +149,7 @@ class StringWriterTest extends TestCase {
 		$this->assertEquals(chr(11).chr(130).chr(0).chr(11).chr(130), $writer->getBinary());
 	}
 
-	function testVarIndexedString() {
+	function testVarIndexedString(): void {
 		$writer = new StringWriter(StringWriter::LE);
 		$writer->addUInt16(self::UINT16);
 		$writer->addString8("The cat is on the mat.");
@@ -158,7 +158,7 @@ class StringWriterTest extends TestCase {
 		$this->assertEquals(chr(11).chr(130).chr(22)."The cat is on the mat.".chr(11).chr(130), $writer->getBinary());
 	}
 
-	function testVarIndexedStringMax() {
+	function testVarIndexedStringMax(): void {
 		$expected = random_bytes(255);
 		$writer = new StringWriter(StringWriter::LE);
 		$writer->addUInt16(self::UINT16);
@@ -168,7 +168,7 @@ class StringWriterTest extends TestCase {
 		$this->assertEquals(chr(11).chr(130).chr(255).$expected.chr(11).chr(130), $writer->getBinary());
 	}
 
-	function testVarIndexedStringOverflow() {
+	function testVarIndexedStringOverflow(): void {
 		$expected = random_bytes(256);
 		$writer = new StringWriter(StringWriter::LE);
 		$writer->addUInt16(self::UINT16);
@@ -177,7 +177,7 @@ class StringWriterTest extends TestCase {
 		$writer->addString8($expected);
 	}
 
-	function testVarIndexedStringShort() {
+	function testVarIndexedStringShort(): void {
 		$expected = random_bytes(4096);
 		$writer = new StringWriter(StringWriter::LE);
 		$writer->addString16($expected);
@@ -185,7 +185,7 @@ class StringWriterTest extends TestCase {
 		$this->assertEquals(chr(0).chr(16).$expected, $writer->getBinary());
 	}
 
-	function testVarIndexedStringLong() {
+	function testVarIndexedStringLong(): void {
 		$expected = random_bytes(4096);
 		$writer = new StringWriter(StringWriter::LE);
 		$writer->addString32($expected);
@@ -193,7 +193,7 @@ class StringWriterTest extends TestCase {
 		$this->assertEquals(chr(0).chr(16).chr(0).chr(0).$expected, $writer->getBinary());
 	}
 
-	function testVarIndexedStringLongLong() {
+	function testVarIndexedStringLongLong(): void {
 		$expected = random_bytes(4096);
 		$writer = new StringWriter(StringWriter::LE);
 		$writer->addString64($expected);
@@ -201,7 +201,7 @@ class StringWriterTest extends TestCase {
 		$this->assertEquals(chr(0).chr(16).chr(0).chr(0).chr(0).chr(0).chr(0).chr(0).$expected, $writer->getBinary());
 	}
 
-	function testFixedIndexedStringEmpty() {
+	function testFixedIndexedStringEmpty(): void {
 		$writer = new StringWriter(StringWriter::LE);
 		$writer->addUInt16(self::UINT16);
 		$writer->addString8("", 10);
@@ -210,7 +210,7 @@ class StringWriterTest extends TestCase {
 		$this->assertEquals(chr(11).chr(130).chr(0).str_repeat("\0", 10).chr(11).chr(130), $writer->getBinary());
 	}
 
-	function testFixedIndexedStringShort() {
+	function testFixedIndexedStringShort(): void {
 		$expected = "Ultima VI";
 		$writer = new StringWriter(StringWriter::LE);
 		$writer->addUInt16(self::UINT16);
@@ -220,7 +220,7 @@ class StringWriterTest extends TestCase {
 		$this->assertEquals(chr(11).chr(130).chr(9).chr(0).str_pad($expected, 10, "\0").chr(11).chr(130), $writer->getBinary());
 	}
 
-	function testFixedIndexedStringLong() {
+	function testFixedIndexedStringLong(): void {
 		$expected = "Ultima VI";
 		$writer = new StringWriter(StringWriter::LE);
 		$writer->addUInt16(self::UINT16);
@@ -230,7 +230,7 @@ class StringWriterTest extends TestCase {
 		$this->assertEquals(chr(11).chr(130).chr(9).chr(0).chr(0).chr(0).str_pad($expected, 10, "\0").chr(11).chr(130), $writer->getBinary());
 	}
 
-	function testFixedIndexedStringLongLong() {
+	function testFixedIndexedStringLongLong(): void {
 		$expected = "Ultima VI";
 		$writer = new StringWriter(StringWriter::LE);
 		$writer->addUInt16(self::UINT16);
@@ -240,7 +240,7 @@ class StringWriterTest extends TestCase {
 		$this->assertEquals(chr(11).chr(130).chr(9).chr(0).chr(0).chr(0).chr(0).chr(0).chr(0).chr(0).str_pad($expected, 10, "\0").chr(11).chr(130), $writer->getBinary());
 	}
 	
-	function testFixedIndexedOverflow() {
+	function testFixedIndexedOverflow(): void {
 		$expected = "Ultima VIII";
 		$writer = new StringWriter(StringWriter::LE);
 		$this->expectException(\RuntimeException::class);
