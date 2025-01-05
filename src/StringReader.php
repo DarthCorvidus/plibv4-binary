@@ -1,5 +1,5 @@
 <?php
-namespace plibv4\Binary;
+namespace plibv4\binary;
 class StringReader {
 	private string $string;
 	private int $endian;

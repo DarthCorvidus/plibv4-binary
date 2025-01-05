@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "55f81b8b8b9203945163ece9ca88bf7c",
+    "content-hash": "e3c30ad352db427605cf996700ab9bc7",
     "packages": [],
     "packages-dev": [
         {
@@ -1728,6 +1728,49 @@
                 ]
             },
             "time": "2024-12-24T18:30:58+00:00"
+        },
+        {
+            "name": "plibv4/streams",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/DarthCorvidus/plibv4-streams",
+                "reference": "805073d51752411a52fafea4948515fbcabc2af6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/DarthCorvidus/plibv4-streams/zipball/805073d51752411a52fafea4948515fbcabc2af6",
+                "reference": "805073d51752411a52fafea4948515fbcabc2af6",
+                "shasum": ""
+            },
+            "require": {
+                "phpunit/phpunit": "^9.6.x-dev",
+                "vimeo/psalm": "^6.x-dev"
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "scripts": {
+                "test": [
+                    "./vendor/bin/phpunit --bootstrap vendor/autoload.php tests"
+                ],
+                "testdox": [
+                    "./vendor/bin/phpunit --bootstrap vendor/autoload.php --testdox --colors=always tests"
+                ],
+                "psalm": [
+                    "./vendor/bin/psalm --show-info=true --no-cache"
+                ],
+                "psatest": [
+                    "composer install",
+                    "./vendor/bin/psalm --show-info=true --no-cache",
+                    "./vendor/bin/phpunit --bootstrap vendor/autoload.php tests/"
+                ]
+            },
+            "time": "2025-01-04T18:56:06+00:00"
         },
         {
             "name": "plibv4/terminaltable",
@@ -3892,7 +3935,8 @@
     "stability-flags": {
         "vimeo/psalm": 20,
         "phpunit/phpunit": 20,
-        "plibv4/profiler": 20
+        "plibv4/profiler": 20,
+        "plibv4/streams": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

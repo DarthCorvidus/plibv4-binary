@@ -24,7 +24,7 @@
 		},
 		{
 			"type": "vcs",
-			"url": "https://github.com/DarthCorvidus/plibv4-binary",
+			"url": "https://github.com/DarthCorvidus/plibv4-streams",
 			"no-api": true
 		}
 	],
@@ -34,7 +34,8 @@
 	"require-dev": {
 		"vimeo/psalm": "6.x-dev",
 		"phpunit/phpunit": "9.6.x-dev",
-		"plibv4/profiler": "dev-main"
+		"plibv4/profiler": "dev-main",
+		"plibv4/streams": "dev-main"
 	},
 	"scripts": {
 		"test": "./vendor/bin/phpunit --bootstrap vendor/autoload.php tests",
