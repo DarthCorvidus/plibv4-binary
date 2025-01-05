@@ -1,11 +1,40 @@
 {
 	"name": "plibv4/binary",
+	"minimum-stability": "dev",
+	"repositories": [
+		{
+			"type": "vcs",
+			"url": "https://github.com/DarthCorvidus/plibv4-longeststring",
+			"no-api": true
+		},
+		{
+			"type": "vcs",
+			"url": "https://github.com/DarthCorvidus/plibv4-vtc",
+			"no-api": true
+		},
+		{
+			"type": "vcs",
+			"url": "https://github.com/DarthCorvidus/plibv4-terminaltable",
+			"no-api": true
+		},
+		{
+			"type": "vcs",
+			"url": "https://github.com/DarthCorvidus/plibv4-profiler",
+			"no-api": true
+		},
+		{
+			"type": "vcs",
+			"url": "https://github.com/DarthCorvidus/plibv4-binary",
+			"no-api": true
+		}
+	],
 	"autoload": {
         "classmap": ["src/"]
     },
 	"require-dev": {
 		"vimeo/psalm": "6.x-dev",
-		"phpunit/phpunit": "9.6.x-dev"
+		"phpunit/phpunit": "9.6.x-dev",
+		"plibv4/profiler": "dev-main"
 	},
 	"scripts": {
 		"test": "./vendor/bin/phpunit --bootstrap vendor/autoload.php tests",
