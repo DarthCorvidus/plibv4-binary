@@ -9,22 +9,22 @@ class StructWriter {
 		$this->streamWriter = $streamWriter;
 	}
 	
-	private function toReflectionProperty(\ReflectionProperty $property): \ReflectionProperty {
+	static function toReflectionProperty(\ReflectionProperty $property): \ReflectionProperty {
 		return $property;
 	}
 
-	private function implements($className, $implementName) {
+	static function implements($className, $implementName) {
 		return in_array($implementName, class_implements($className));
 	}
 	
-	function getStructureTypes(Structure $structure): array {
+	static function getStructureTypes(Structure $structure): array {
 		$types = array();
 		$reflection = new \ReflectionClass($structure);
 		$properties = $reflection->getProperties();
 		foreach($properties as $value) {
-			$property = $this->toReflectionProperty($value);
+			$property = self::toReflectionProperty($value);
 			$typeName = $property->getType()->__toString();
-			if($this->implements($typeName, BinaryValue::class)) {
+			if(self::implements($typeName, BinaryValue::class)) {
 				$types[$property->name] = $property->getType()->__toString();
 			continue;
 			}
