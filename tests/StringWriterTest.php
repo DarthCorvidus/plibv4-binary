@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
+namespace plibv4\binary;
 use PHPUnit\Framework\TestCase;
-use plibv4\Binary\StringWriter;
 class StringWriterTest extends TestCase {
 	const UINT8  =           15;
 	const UINT16 =        33291;
