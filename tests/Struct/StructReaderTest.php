@@ -26,4 +26,20 @@ class StructReaderTest extends TestCase {
 		
 		$this->assertEquals($vacation, $structReader->readClass(new VacationStruct()));
 	}
+	
+	function testReadExample(): void {
+		$expected = new Example(15, 150000, "The cat is on the mat");
+		
+		$stringWriter = new StringWriter();
+		$structWriter = new StructWriter(ByteOrder::LE, $stringWriter);
+		$structWriter->writeClass($expected);
+		
+		$stringReader = new StringReader($stringWriter->getString());
+		$structReader = new StructReader(ByteOrder::LE, $stringReader);
+		
+		$loaded = $structReader->readClass(new ExampleStruct());
+		$this->assertEquals($expected, $loaded);
+		
+
+	}
 }
