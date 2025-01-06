@@ -7,3 +7,10 @@ foreach(glob($dir."/*.php") as $value) {
 	 */
 	require_once $value;
 }
+$examples = dirname(__DIR__)."/tests/StructExamples";
+foreach(glob($examples."/*.php") as $value) {
+	/**
+	 * @psalm-suppress UnresolvableInclude
+	 */
+	require_once $value;
+}
