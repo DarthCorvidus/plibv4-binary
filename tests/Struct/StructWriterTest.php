@@ -22,4 +22,18 @@ class StructWriterTest extends TestCase {
 		$structWriter->writeClass($vacation);
 		$this->assertSame($expected, $stringWriter->getString());
 	}
+	
+	function testWriteExample(): void {
+		$expected = Pack::uint8(15);
+		$expected .= Pack::uint32(ByteOrder::LE, 150000);
+		$expected .= Pack::uint16(ByteOrder::LE, 21);
+		$expected .= "The cat is on the mat";
+
+		$example = new Example(15, 150000, "The cat is on the mat");
+		
+		$stringWriter = new StringWriter();
+		$structWriter = new StructWriter(ByteOrder::LE, $stringWriter);
+		$structWriter->writeClass($example);
+		$this->assertSame($expected, $stringWriter->getString());
+	}
 }
