@@ -8,12 +8,6 @@ use plibv4\binary\StructReader;
 use plibv4\binary\Pack;
 use plibv4\binary\Unpack;
 use plibv4\binary\ByteOrder;
-$dir = dirname(__DIR__)."/TimeKeeping";
-echo "Dir: ".$dir.PHP_EOL;
-foreach(glob($dir."/*.php") as $value) {
-	#echo $value.PHP_EOL;
-	require_once $value;
-}
 use PHPUnit\Framework\TestCase;
 class StructReaderTest extends TestCase {
 	function testReadVacation() {

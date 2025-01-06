@@ -6,15 +6,9 @@ use plibv4\binary\StructWriter;
 use plibv4\binary\Pack;
 use plibv4\binary\Unpack;
 use \plibv4\binary\ByteOrder;
-$dir = dirname(__DIR__)."/TimeKeeping";
-echo "Dir: ".$dir.PHP_EOL;
-foreach(glob($dir."/*.php") as $value) {
-	#echo $value.PHP_EOL;
-	require_once $value;
-}
 use PHPUnit\Framework\TestCase;
 class StructWriterTest extends TestCase {
-	function testWriteVacation() {
+	function testWriteVacation(): void {
 		$from = gregoriantojd(12, 23, 2024);
 		$to = gregoriantojd(1, 3, 2025);
 		$expected = Pack::uInt32(ByteOrder::LE, $from);
