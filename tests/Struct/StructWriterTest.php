@@ -28,8 +28,11 @@ class StructWriterTest extends TestCase {
 		$expected .= Pack::uint32(ByteOrder::LE, 150000);
 		$expected .= Pack::uint16(ByteOrder::LE, 21);
 		$expected .= "The cat is on the mat";
+		$expected .= Pack::uInt8(27);
+		$expected .= Pack::uInt16(ByteOrder::LE, 4);
+		$expected .= "test";
 
-		$example = new Example(15, 150000, "The cat is on the mat");
+		$example = new Example(15, 150000, "The cat is on the mat", new ExampleSub(27, "test"));
 		
 		$stringWriter = new StringWriter();
 		$structWriter = new StructWriter(ByteOrder::LE, $stringWriter);

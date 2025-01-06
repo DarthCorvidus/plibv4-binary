@@ -23,6 +23,18 @@ class StructReader {
 				$values[$propertyName] = call_user_func_array(array($typeName, "fromBinary"), array($this->byteOrder, $this->streamReader));
 			continue;
 			}
+			/**
+			 * If Structure type implements Structure itself, create an empty
+			 * instance of the structure and new instance of $structReader, then
+			 * read from binary.
+			 */
+			if(StructWriter::implements($typeName, Structure::class)) {
+				$structReader = new StructReader($this->byteOrder, $this->streamReader);
+				$reflection = new \ReflectionClass($typeName);
+				$instance = $reflection->newInstanceWithoutConstructor();
+				$values[$propertyName] = $structReader->readClass($instance);
+			continue;
+			}
 		throw new \RuntimeException(sprintf("No way to handle structure property type '%s'", $typeName));
 		}
 		$reflection = new \ReflectionClass($structure->forClass());

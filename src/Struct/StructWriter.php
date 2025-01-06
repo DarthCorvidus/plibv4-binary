@@ -38,6 +38,11 @@ class StructWriter {
 				$types[$property->name] = $property->getType()->__toString();
 			continue;
 			}
+			if(self::implements($typeName, Structure::class)) {
+				$types[$property->name] = $property->getType()->__toString();
+			continue;
+			}
+
 		throw new \Exception($typeName." of property ".$property->name." cannot be handled");
 		}
 	return $types;
@@ -52,11 +57,22 @@ class StructWriter {
 				call_user_func(array($className, "toBinary"), $this->byteOrder, $this->streamWriter, $structableValues->getInt($propName));
 			continue;
 			}
+			
+			
 			if($this->implements($className, StringValue::class)) {
 				call_user_func(array($className, "toBinary"), $this->byteOrder, $this->streamWriter, $structableValues->getString($propName));
 			continue;
 			}
-		throw new \RuntimeException("unable to handle Struct property ".$structure::class."::".$propName);
+			/**
+			 * If type laid down in Structure implements Structure itself, open
+			 * up new StructWriter.
+			 */			
+			if($this->implements($className, Structure::class)) {
+				$writer = new StructWriter($this->byteOrder, $this->streamWriter);
+				$writer->writeClass($structableValues->getStructable($propName));
+			continue;
+			}
+		throw new \RuntimeException("unable to handle Structure property ".$structure::class."::".$propName);
 		}
 	}
 }

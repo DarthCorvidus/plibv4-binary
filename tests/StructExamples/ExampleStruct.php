@@ -11,6 +11,7 @@ class ExampleStruct implements Structure {
 	public UnsignedInteger8 $tiny;
 	public UnsignedInteger32 $int;
 	public String16 $string;
+	public ExampleSubStruct $subclass;
 	public function forClass(): string {
 		return Example::class;
 	}

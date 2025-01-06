@@ -28,7 +28,7 @@ class StructReaderTest extends TestCase {
 	}
 	
 	function testReadExample(): void {
-		$expected = new Example(15, 150000, "The cat is on the mat");
+		$expected = new Example(15, 150000, "The cat is on the mat", new ExampleSub(27, "test"));
 		
 		$stringWriter = new StringWriter();
 		$structWriter = new StructWriter(ByteOrder::LE, $stringWriter);
