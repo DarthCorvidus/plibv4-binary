@@ -10,7 +10,7 @@ use plibv4\binary\Unpack;
 use plibv4\binary\ByteOrder;
 use PHPUnit\Framework\TestCase;
 class StructReaderTest extends TestCase {
-	function testReadVacation() {
+	function testReadVacation(): void {
 		$from = gregoriantojd(12, 23, 2024);
 		$to = gregoriantojd(1, 3, 2025);
 

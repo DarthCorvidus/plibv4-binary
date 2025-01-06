@@ -13,16 +13,26 @@ class StructWriter {
 		return $property;
 	}
 
-	static function implements($className, $implementName) {
+	static function implements(string $className, string $implementName): bool {
 		return in_array($implementName, class_implements($className));
 	}
 	
+	/**
+	 * 
+	 * @param Structure $structure
+	 * @return array<string, string>
+	 * @throws \RuntimeException
+	 * @throws \Exception
+	 */
 	static function getStructureTypes(Structure $structure): array {
 		$types = array();
 		$reflection = new \ReflectionClass($structure);
 		$properties = $reflection->getProperties();
 		foreach($properties as $value) {
 			$property = self::toReflectionProperty($value);
+			if($property->getType() === null) {
+				throw new \RuntimeException($value." in ".Structure::class." has no type");
+			}
 			$typeName = $property->getType()->__toString();
 			if(self::implements($typeName, BinaryValue::class)) {
 				$types[$property->name] = $property->getType()->__toString();
@@ -33,24 +43,20 @@ class StructWriter {
 	return $types;
 	}
 	
-	private function getStructableTypes(Structable $structable) {
-		$types = array();
-		$reflection = new \ReflectionClass($structable);
-		$properties = $reflection->getProperties();
-		foreach($properties as $value) {
-			$property = $this->toReflectionProperty($value);
-			$types[$property->name] = $property->getValue($structable);
-		}
-	return $types;
-	}
-	
-	public function writeClass(Structable $structable) {
+	public function writeClass(Structable $structable): void {
 		$structure = $structable->getStructure();
+		$structableValues = new StructableValues($structable);
 		$structureTypes = $this->getStructureTypes($structure);
-		$structableTypes = $this->getStructableTypes($structable);
 		foreach($structureTypes as $propName => $className) {
-			$propValue = $structableTypes[$propName];
-			call_user_func(array($className, "toBinary"), $this->byteOrder, $this->streamWriter, $propValue);
+			if($this->implements($className, IntegerValue::class)) {
+				call_user_func(array($className, "toBinary"), $this->byteOrder, $this->streamWriter, $structableValues->getInt($propName));
+			continue;
+			}
+			if($this->implements($className, StringValue::class)) {
+				call_user_func(array($className, "toBinary"), $this->byteOrder, $this->streamWriter, $structableValues->getString($propName));
+			continue;
+			}
+		throw new \RuntimeException("unable to handle Struct property ".$structure::class."::".$propName);
 		}
 	}
 }

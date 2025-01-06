@@ -9,6 +9,11 @@ class StructReader {
 		$this->byteOrder = $byteOrder;
 	}
 	
+	/**
+	 * @param Structure $structure
+	 * @return Structable
+	 * @throws \RuntimeException
+	 */
 	function readClass(Structure $structure): Structable {
 		$structureTypes = StructWriter::getStructureTypes($structure);
 		foreach($structureTypes as $propertyName => $typeName) {
@@ -22,7 +27,11 @@ class StructReader {
 		}
 		$reflection = new \ReflectionClass($structure->forClass());
 		$instance = $reflection->newInstanceWithoutConstructor();
-	
+		$strName = Structable::class;
+		if(!($instance instanceof $strName)) {
+			throw new \RuntimeException($instance."::class does not implement ".Structable::class);
+		}
+
 		foreach($reflection->getProperties() as $value) {
 			$properties[$value->getName()] = $value;
 		}
