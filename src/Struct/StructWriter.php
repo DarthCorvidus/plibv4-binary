@@ -35,11 +35,11 @@ class StructWriter {
 			}
 			$typeName = $property->getType()->__toString();
 			if(self::implements($typeName, BinaryValue::class)) {
-				$types[$property->name] = $property->getType()::class;
+				$types[$property->name] = $property->getType()->__toString();
 			continue;
 			}
 			if(self::implements($typeName, Structure::class)) {
-				$types[$property->name] = $property->getType()::class;
+				$types[$property->name] = $property->getType()->__toString();
 			continue;
 			}
 
@@ -72,7 +72,7 @@ class StructWriter {
 				$writer->writeClass($structableValues->getStructable($propName));
 			continue;
 			}
-		throw new \RuntimeException("unable to handle Structure property ".$structure::class."::".$propName);
+		throw new \RuntimeException("unable to handle Structure property ' ".$className." ".$structure::class."::".$propName."'");
 		}
 	}
 }
