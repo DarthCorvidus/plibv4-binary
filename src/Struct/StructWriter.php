@@ -20,7 +20,7 @@ class StructWriter {
 	/**
 	 * 
 	 * @param Structure $structure
-	 * @return array<string, class-string>
+	 * @return array<string, string>
 	 * @throws \RuntimeException
 	 * @throws \Exception
 	 */
@@ -42,7 +42,6 @@ class StructWriter {
 				$types[$property->name] = $property->getType()->__toString();
 			continue;
 			}
-
 		throw new \Exception($typeName." of property ".$property->name." cannot be handled");
 		}
 	return $types;
