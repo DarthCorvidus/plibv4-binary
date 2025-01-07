@@ -20,7 +20,7 @@ class StructWriter {
 	/**
 	 * 
 	 * @param Structure $structure
-	 * @return array<string, string>
+	 * @return array<string, class-string>
 	 * @throws \RuntimeException
 	 * @throws \Exception
 	 */
@@ -31,15 +31,15 @@ class StructWriter {
 		foreach($properties as $value) {
 			$property = self::toReflectionProperty($value);
 			if($property->getType() === null) {
-				throw new \RuntimeException($value." in ".Structure::class." has no type");
+				throw new \RuntimeException($value." in ".$structure::class." has no type");
 			}
 			$typeName = $property->getType()->__toString();
 			if(self::implements($typeName, BinaryValue::class)) {
-				$types[$property->name] = $property->getType()->__toString();
+				$types[$property->name] = $property->getType()::class;
 			continue;
 			}
 			if(self::implements($typeName, Structure::class)) {
-				$types[$property->name] = $property->getType()->__toString();
+				$types[$property->name] = $property->getType()::class;
 			continue;
 			}
 
