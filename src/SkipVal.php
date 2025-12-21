@@ -12,14 +12,17 @@ class SkipVal implements BinVal {
 		$this->length = $length;
 	}
 
+	#[\Override]
 	public function getLength(): int {
 		return $this->length;
 	}
 
+	#[\Override]
 	public function getValue(string $string) {
 		return "";
 	}
 
+	#[\Override]
 	public function putValue($value): string {
 		return str_repeat("\0", $this->length);
 	}

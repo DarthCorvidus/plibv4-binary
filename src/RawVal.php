@@ -11,14 +11,17 @@ class RawVal implements BinVal {
 		$this->length = $length;
 	}
 
+	#[\Override]
 	public function getLength(): int {
 		return $this->length;
 	}
 
+	#[\Override]
 	public function getValue(string $string) {
 		return substr($string, 0, $this->length);
 	}
 
+	#[\Override]
 	public function putValue($value): string {
 		return $value;
 	}
