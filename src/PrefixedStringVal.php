@@ -1,8 +1,11 @@
 <?php
 namespace plibv4\binary;
+/**
+ * @implements BinVal<string>
+*/
 class PrefixedStringVal implements BinVal {
-	private $intval;
-	private $length;
+	private IntVal $intval;
+	private int $length = 0;
 	function __construct(IntVal $intval) {
 		$this->intval = $intval;
 	}
