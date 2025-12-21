@@ -45,10 +45,5 @@
 			"./vendor/bin/psalm --show-info=true --no-cache",
 			"./vendor/bin/phpunit --bootstrap tests/autoload.php tests/"
 		]
-	},
-	"config": {
-		"platform": {
-			"php": "8.2"
-		}
 	}
 }
