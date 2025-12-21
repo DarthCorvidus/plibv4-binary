@@ -1,4 +1,5 @@
 <?php
+namespace plibv4\binary;
 class PrefixedStringVal implements BinVal {
 	private $intval;
 	private $length;

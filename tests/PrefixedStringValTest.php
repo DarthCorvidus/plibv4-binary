@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+namespace plibv4\binary;
 use PHPUnit\Framework\TestCase;
 class PrefixedStringValTest extends TestCase {
 	function testPutString8(): void {

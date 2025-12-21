@@ -5,7 +5,7 @@
  * @copyright (c) 2023 Claus-Christoph Küthe
  * @author Claus-Christoph Küthe <floss@vm01.telton.de>
  */
-
+namespace plibv4\binary;
 class SkipVal implements BinVal {
 	private $length = 0;
 	function __construct(int $length) {

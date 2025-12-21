@@ -7,6 +7,7 @@
  * @author Claus-Christoph Küthe <floss@vm01.telton.de>
  * 
  */
+namespace plibv4\binary;
 interface BinVal {
 	/**
 	 * This is supposed to return a binary string ready to be written to a

@@ -24,10 +24,10 @@ class StringWriterTest extends TestCase {
 		$writer->addInt64(self::INT64);
 		$string = $writer->getBinary();
 		$this->assertEquals(1+2+4+8, strlen($string));
-		$this->assertEquals(self::INT8, \IntVal::int8()->getValue(substr($string, 0, 1)));
-		$this->assertEquals(self::INT16, \IntVal::int16SE()->getValue(substr($string, 1, 2)));
-		$this->assertEquals(self::INT32, \IntVal::int32SE()->getValue(substr($string, 3, 4)));
-		$this->assertEquals(self::INT64, \IntVal::int64SE()->getValue(substr($string, 7, 8)));
+		$this->assertEquals(self::INT8, IntVal::int8()->getValue(substr($string, 0, 1)));
+		$this->assertEquals(self::INT16, IntVal::int16SE()->getValue(substr($string, 1, 2)));
+		$this->assertEquals(self::INT32, IntVal::int32SE()->getValue(substr($string, 3, 4)));
+		$this->assertEquals(self::INT64, IntVal::int64SE()->getValue(substr($string, 7, 8)));
 	}
 	
 	function testUIntSE(): void {
@@ -38,10 +38,10 @@ class StringWriterTest extends TestCase {
 		$writer->addUInt64(self::UINT64);
 		$string = $writer->getBinary();
 		$this->assertEquals(1+2+4+8, strlen($string));
-		$this->assertEquals(self::UINT8, \IntVal::int8()->getValue(substr($string, 0, 1)));
-		$this->assertEquals(self::UINT16, \IntVal::uint16SE()->getValue(substr($string, 1, 2)));
-		$this->assertEquals(self::UINT32, \IntVal::uint32SE()->getValue(substr($string, 3, 4)));
-		$this->assertEquals(self::UINT64, \IntVal::uint64SE()->getValue(substr($string, 7, 8)));
+		$this->assertEquals(self::UINT8, IntVal::int8()->getValue(substr($string, 0, 1)));
+		$this->assertEquals(self::UINT16, IntVal::uint16SE()->getValue(substr($string, 1, 2)));
+		$this->assertEquals(self::UINT32, IntVal::uint32SE()->getValue(substr($string, 3, 4)));
+		$this->assertEquals(self::UINT64, IntVal::uint64SE()->getValue(substr($string, 7, 8)));
 	}
 	
 	function testUIntBE(): void {
@@ -52,10 +52,10 @@ class StringWriterTest extends TestCase {
 		$writer->addUInt64(self::UINT64);
 		$string = $writer->getBinary();
 		$this->assertEquals(1+2+4+8, strlen($string));
-		$this->assertEquals(self::UINT8, \IntVal::int8()->getValue(substr($string, 0, 1)));
-		$this->assertEquals(self::UINT16, \IntVal::uint16BE()->getValue(substr($string, 1, 2)));
-		$this->assertEquals(self::UINT32, \IntVal::uint32BE()->getValue(substr($string, 3, 4)));
-		$this->assertEquals(self::UINT64, \IntVal::uint64BE()->getValue(substr($string, 7, 8)));
+		$this->assertEquals(self::UINT8, IntVal::int8()->getValue(substr($string, 0, 1)));
+		$this->assertEquals(self::UINT16, IntVal::uint16BE()->getValue(substr($string, 1, 2)));
+		$this->assertEquals(self::UINT32, IntVal::uint32BE()->getValue(substr($string, 3, 4)));
+		$this->assertEquals(self::UINT64, IntVal::uint64BE()->getValue(substr($string, 7, 8)));
 	}
 
 	function testUIntLE(): void {
@@ -66,10 +66,10 @@ class StringWriterTest extends TestCase {
 		$writer->addUInt64(self::UINT64);
 		$string = $writer->getBinary();
 		$this->assertEquals(1+2+4+8, strlen($string));
-		$this->assertEquals(self::UINT8, \IntVal::int8()->getValue(substr($string, 0, 1)));
-		$this->assertEquals(self::UINT16, \IntVal::uint16LE()->getValue(substr($string, 1, 2)));
-		$this->assertEquals(self::UINT32, \IntVal::uint32LE()->getValue(substr($string, 3, 4)));
-		$this->assertEquals(self::UINT64, \IntVal::uint64LE()->getValue(substr($string, 7, 8)));
+		$this->assertEquals(self::UINT8, IntVal::int8()->getValue(substr($string, 0, 1)));
+		$this->assertEquals(self::UINT16, IntVal::uint16LE()->getValue(substr($string, 1, 2)));
+		$this->assertEquals(self::UINT32, IntVal::uint32LE()->getValue(substr($string, 3, 4)));
+		$this->assertEquals(self::UINT64, IntVal::uint64LE()->getValue(substr($string, 7, 8)));
 	}
 	
 	function testVarStringCZero(): void {

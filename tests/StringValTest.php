@@ -1,6 +1,8 @@
 <?php
 declare(strict_types=1);
+namespace plibv4\binary;
 use PHPUnit\Framework\TestCase;
+use InvalidArgumentException;
 class StringValTest extends TestCase {
 	function testRead(): void {
 		$target = "Mars";

@@ -1,6 +1,9 @@
 <?php
 declare(strict_types=1);
+namespace plibv4\binary;
 use PHPUnit\Framework\TestCase;
+use InvalidArgumentException;
+use RuntimeException;
 class IntValTest extends TestCase {
 	function testWriteINT8(): void {
 		$writer = IntVal::int8();

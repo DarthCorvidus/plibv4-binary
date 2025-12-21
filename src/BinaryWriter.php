@@ -5,6 +5,7 @@
  * @copyright (c) 2023 Claus-Christoph Küthe
  * @author Claus-Christoph Küthe <floss@vm01.telton.de>
  */
+namespace plibv4\binary;
 class BinaryWriter {
 	static function toString(array $values, BinStruct $model): string {
 		$string = "";

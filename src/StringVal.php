@@ -8,6 +8,8 @@
  * @author Claus-Christoph Küthe <floss@vm01.telton.de>
  * @implements BinVal<string>
  */
+namespace plibv4\binary;
+use InvalidArgumentException;
 class StringVal implements BinVal {
 	private int $length;
 	private string $pad;
