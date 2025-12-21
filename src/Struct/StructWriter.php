@@ -14,7 +14,15 @@ class StructWriter {
 	}
 
 	static function implements(string $className, string $implementName): bool {
-		return in_array($implementName, class_implements($className));
+		if(!class_exists($className)) {
+			throw new \Exception("class ".$className." does not exists and is not loadable");
+		}
+		if(!interface_exists($implementName)) {
+			throw new \Exception("interface ".$implementName." does not exists and is not loadable");
+		}
+		/** @var list<string> */
+		$implements = class_implements($className);
+		return in_array($implementName, $implements, true);
 	}
 	
 	/**
@@ -31,7 +39,7 @@ class StructWriter {
 		foreach($properties as $value) {
 			$property = self::toReflectionProperty($value);
 			if($property->getType() === null) {
-				throw new \RuntimeException($value." in ".$structure::class." has no type");
+				throw new \RuntimeException($value->__toString()." in ".$structure::class." has no type");
 			}
 			$typeName = $property->getType()->__toString();
 			if(self::implements($typeName, BinaryValue::class)) {
