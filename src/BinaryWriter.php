@@ -6,6 +6,8 @@
  * @author Claus-Christoph Küthe <floss@vm01.telton.de>
  */
 namespace plibv4\binary;
+use OutOfBoundsException;
+use RuntimeException;
 class BinaryWriter {
 	static function toString(array $values, BinStruct $model): string {
 		$string = "";
@@ -24,7 +26,7 @@ class BinaryWriter {
 		}
 	return $string;
 	}
-
+	
 	static function toHandle($handle, array $values, BinStruct $model) {
 		foreach($model->getNames() as $value) {
 			if(!isset($values[$value])) {
@@ -43,6 +45,9 @@ class BinaryWriter {
 	
 	static function toPath($filename, array $values, BinStruct $model) {
 		$handle = fopen($filename, "wb");
+		if($handle === false) {
+			throw new RuntimeException("unable to open ".$filename." for writing");
+		}
 		self::toHandle($handle, $values, $model);
 		fclose($handle);
 	}
