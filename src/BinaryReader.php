@@ -6,6 +6,7 @@
  * @author Claus-Christoph Küthe <floss@vm01.telton.de>
  */
 namespace plibv4\binary;
+use RuntimeException;
 class BinaryReader {
 	private $model;
 	private $pos;
@@ -58,7 +59,7 @@ class BinaryReader {
 	static function fromPath(string $filename, BinStruct $model): array {
 		$handle = fopen($filename, "rb");
 		if($handle===FALSE) {
-			throw new Exception("Could not open file ".$filename);
+			throw new RuntimeException("Could not open file ".$filename);
 		}
 		$values = self::fromHandle($handle, $model);
 		fclose($handle);
