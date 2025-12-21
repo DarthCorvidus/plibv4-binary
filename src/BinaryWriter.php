@@ -9,12 +9,22 @@ namespace plibv4\binary;
 use OutOfBoundsException;
 use RuntimeException;
 class BinaryWriter {
+	/**
+	 * 
+	 * @param array<array-key, mixed> $values
+	 * @param BinStruct $model
+	 * @return string
+	 * @throws OutOfBoundsException
+	 */
 	static function toString(array $values, BinStruct $model): string {
 		$string = "";
 		foreach($model->getNames() as $value) {
 			if(!isset($values[$value])) {
 				throw new OutOfBoundsException("Key ".$value." does not exist in input array while processing ". get_class($model));
 			}
+			/**
+			 * @var array<array-key, mixed>
+			 */
 			$input = $values[$value];
 			if($model->isBinVal($value)) {
 				$binval = $model->getBinVal($value);
@@ -27,11 +37,22 @@ class BinaryWriter {
 	return $string;
 	}
 	
-	static function toHandle($handle, array $values, BinStruct $model) {
+	/**
+	 * 
+	 * @param resource $handle
+	 * @param array<array-key, mixed> $values
+	 * @param BinStruct $model
+	 * @return void
+	 * @throws OutOfBoundsException
+	 */
+	static function toHandle(mixed $handle, array $values, BinStruct $model): void {
 		foreach($model->getNames() as $value) {
 			if(!isset($values[$value])) {
 				throw new OutOfBoundsException("Key ".$value." does not exist in input array while processing ". get_class($model));
 			}
+			/**
+			 * @var array<array-key, mixed>
+			 */
 			$input = $values[$value];
 			if($model->isBinVal($value)) {
 				$binval = $model->getBinVal($value);
@@ -43,7 +64,15 @@ class BinaryWriter {
 		}
 	}
 	
-	static function toPath($filename, array $values, BinStruct $model) {
+	/**
+	 * 
+	 * @param string $filename
+	 * @param array<array-key, mixed> $values
+	 * @param BinStruct $model
+	 * @return void
+	 * @throws RuntimeException
+	 */
+	static function toPath(string $filename, array $values, BinStruct $model): void {
 		$handle = fopen($filename, "wb");
 		if($handle === false) {
 			throw new RuntimeException("unable to open ".$filename." for writing");
