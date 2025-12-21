@@ -7,6 +7,7 @@
  */
 namespace plibv4\binary;
 use RuntimeException;
+use InvalidArgumentException;
 class BinaryReader {
 	private $model;
 	private $pos;
@@ -38,8 +39,8 @@ class BinaryReader {
 	return $this->recurse($this->model);
 	}
 
-	static function fromHandle($fh, BinStruct $model): array {
-		if($fh === FALSE) {
+	static function fromHandle(mixed $fh, BinStruct $model): array {
+		if($fh === false) {
 			throw new InvalidArgumentException("Handle is not a valid stream, but boolean false.");
 		}
 		$values = array();
