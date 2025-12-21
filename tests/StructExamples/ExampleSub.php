@@ -10,10 +10,12 @@ class ExampleSub implements Structable{
 		$this->description = $description;
 	}
 
+	#[\Override]
 	public function getStructure(): Structure {
 		return new ExampleSubStruct();
 	}
 
+	#[\Override]
 	public function onLoadClass(): void {
 		
 	}

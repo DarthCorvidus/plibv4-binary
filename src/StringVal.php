@@ -20,6 +20,7 @@ class StringVal implements BinVal {
 	 * Length of the string including terminating Null-byte.
 	 * @return int
 	 */
+	#[\Override]
 	public function getLength(): int {
 		return $this->length;
 	}
@@ -30,6 +31,7 @@ class StringVal implements BinVal {
 	 * @return string
 	 * @throws InvalidArgumentException
 	 */
+	#[\Override]
 	public function getValue(string $string): string {
 		$str = substr($string, 0, $this->length);
 		if(strlen($str)<$this->length) {
@@ -56,6 +58,7 @@ class StringVal implements BinVal {
 	 * @return string
 	 * @throws InvalidArgumentException
 	 */
+	#[\Override]
 	public function putValue($value): string {
 		if(strlen($value)>$this->length) {
 			throw new InvalidArgumentException("String too long, ".($this->length-1)." characters allowed.");

@@ -100,6 +100,7 @@ class IntVal implements BinVal {
 	 * @return int
 	 * @throws RuntimeException
 	 */
+	#[\Override]
 	function getValue(string $string): int {
 		if($string==="") {
 			throw new RuntimeException("binary value is empty.");
@@ -108,6 +109,7 @@ class IntVal implements BinVal {
 	return (int)$unpack[1];
 	}
 	
+	#[\Override]
 	function getLength(): int {
 		return $this->size;
 	}
@@ -117,6 +119,7 @@ class IntVal implements BinVal {
 	 * @return string
 	 * @throws RuntimeException
 	 */
+	#[\Override]
 	function putValue($value): string {
 		/**
 		 * Yes, but the compiler does not know about Docblock.

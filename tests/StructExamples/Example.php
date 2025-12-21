@@ -14,10 +14,12 @@ class Example implements Structable {
 		$this->subclass = $subclass;
 	}
 	
+	#[\Override]
 	public function getStructure(): Structure {
 		return new ExampleStruct();
 	}
 
+	#[\Override]
 	public function onLoadClass(): void {
 		
 	}

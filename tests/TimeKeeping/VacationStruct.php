@@ -10,6 +10,7 @@ class VacationStruct implements Structure {
 	public UnsignedInteger32 $from;
 	public UnsignedInteger32 $to;
 	public UnsignedInteger8 $approval;
+	#[\Override]
 	public function forClass(): string {
 		return Vacation::class;
 	}

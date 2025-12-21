@@ -19,10 +19,12 @@ class Vacation implements Structable {
 		return $this->approval;
 	}
 
+	#[\Override]
 	public function getStructure(): Structure {
 		return new VacationStruct();
 	}
 
+	#[\Override]
 	public function onLoadClass(): void {
 		
 	}

@@ -12,6 +12,7 @@ class ExampleStruct implements Structure {
 	public UnsignedInteger32 $int;
 	public String16 $string;
 	public ExampleSubStruct $subclass;
+	#[\Override]
 	public function forClass(): string {
 		return Example::class;
 	}
