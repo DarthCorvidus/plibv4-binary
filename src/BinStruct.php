@@ -9,6 +9,7 @@ namespace plibv4\binary;
 interface BinStruct {
 	/**
 	 * get names of entries.
+	 * @return list<string> get names of BinStruct/BinVal entries
 	 */
 	function getNames(): array;
 	/**

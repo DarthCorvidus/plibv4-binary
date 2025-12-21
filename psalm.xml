@@ -29,7 +29,6 @@
 				 Apart from that, BinVal/BinStruct is far too convoluted for
 				 most purposes.
 			-->
-			<file name="src/BinaryReader.php" />
 			<file name="src/BinaryWriter.php" />
         </ignoreFiles>
     </projectFiles>
