@@ -29,14 +29,8 @@
 				 Apart from that, BinVal/BinStruct is far too convoluted for
 				 most purposes.
 			-->
-			<file name="src/BinStruct.php" />
 			<file name="src/BinaryReader.php" />
 			<file name="src/BinaryWriter.php" />
-			<file name="src/PrefixedStringVal.php" />
-			<file name="src/RawVal.php" />
-			<file name="src/SkipVal.php" />
-			<!-- lots of problems with mixed type, one weakness of BinStruct -->
-			<file name="tests/BeholderCharacter.php" />
         </ignoreFiles>
     </projectFiles>
 </psalm>
