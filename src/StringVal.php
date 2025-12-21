@@ -6,10 +6,12 @@
  * Also note that StringVal does not care about multibyte character sets!
  * @copyright (c) 2023 Claus-Christoph Küthe
  * @author Claus-Christoph Küthe <floss@vm01.telton.de>
- * @implements BinVal<string>
  */
 namespace plibv4\binary;
 use InvalidArgumentException;
+/**
+ * @implements BinVal<string>
+ */
 class StringVal implements BinVal {
 	private int $length;
 	private string $pad;

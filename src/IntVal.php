@@ -10,10 +10,12 @@
  * 
  * @copyright (c) 2023 Claus-Christoph Küthe
  * @author Claus-Christoph Küthe <floss@vm01.telton.de>
- * @implements BinVal<int>
  */
 namespace plibv4\binary;
 use RuntimeException;
+/**
+ * @implements BinVal<int>
+ */
 class IntVal implements BinVal {
 	private $packchar;
 	private $size;

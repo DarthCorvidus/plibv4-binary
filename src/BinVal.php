@@ -2,12 +2,14 @@
 /**
  * Interface for a single binary value, to be read or written from or to a file
  * or string.
- * @template T
  * @copyright (c) 2023 Claus-Christoph Küthe
  * @author Claus-Christoph Küthe <floss@vm01.telton.de>
  * 
  */
 namespace plibv4\binary;
+/**
+ * @template T
+ */
 interface BinVal {
 	/**
 	 * This is supposed to return a binary string ready to be written to a
