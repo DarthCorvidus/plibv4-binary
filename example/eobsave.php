@@ -6,7 +6,7 @@
  * 
  * https://moddingwiki.shikadi.net/wiki/Eye_of_the_Beholder_Save_Game_Format
  */
-
+namespace plibv4\binary;
 include(__DIR__."/../vendor/autoload.php");
 class BeholderSave implements BinStruct {
 	private $values;
@@ -20,7 +20,7 @@ class BeholderSave implements BinStruct {
 		$this->values["unknown"] = new RawVal(31643);
 	}
 
-	public function getBinVal(string $name): \BinVal {
+	public function getBinVal(string $name): BinVal {
 		return $this->values[$name];
 	}
 
@@ -90,7 +90,7 @@ class BeholderCharacter implements BinStruct {
 		return $this->values[$name] instanceof BinStruct;
 	}
 	
-	public function getBinVal(string $name): \BinVal {
+	public function getBinVal(string $name): BinVal {
 		return $this->values[$name];
 	}
 
