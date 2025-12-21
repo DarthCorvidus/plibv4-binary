@@ -106,6 +106,9 @@ class IntVal implements BinVal {
 			throw new RuntimeException("binary value is empty.");
 		}
 		$unpack = unpack($this->getPackChar(), $string);
+		if($unpack === false) {
+			throw new RuntimeException("unpack failed");
+		}
 	return (int)$unpack[1];
 	}
 	
