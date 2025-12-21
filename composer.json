@@ -31,11 +31,13 @@
 	"autoload": {
         "classmap": ["src/"]
     },
-	"require-dev": {
-		"vimeo/psalm": "6.x-dev",
-		"phpunit/phpunit": "9.6.x-dev",
-		"plibv4/profiler": "dev-main",
+	"require": {
 		"plibv4/streams": "dev-main"
+	},
+	"require-dev": {
+		"vimeo/psalm": "^6",
+		"phpunit/phpunit": "^9",
+		"plibv4/profiler": "dev-main"
 	},
 	"scripts": {
 		"test": "./vendor/bin/phpunit --bootstrap tests/autoload.php tests",
