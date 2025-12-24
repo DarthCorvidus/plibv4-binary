@@ -1,6 +1,7 @@
 {
 	"name": "plibv4/binary",
 	"minimum-stability": "dev",
+	"prefer-stable": true,
 	"repositories": [
 		{
 			"type": "vcs",
